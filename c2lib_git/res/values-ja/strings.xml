@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright (c) 2011 im97mori.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <string name="appName">＋ーアラーム</string>
+    <string name="alarmListTitleString">アラーム一覧</string>
+    <string name="alarmSettingLabelString">詳細設定</string>
+    <string name="alarmAddString">アラーム追加</string>
+    <string name="alarmEditString">アラーム編集</string>
+    <string name="alarmNameTitleString">アラーム名称</string>
+    <string name="alarmNameTitleErrorString">アラーム名称を入力</string>
+    <string name="alarmAddTitleString">アラーム新規作成</string>
+    <string name="alarmNameHint">アラーム名称を入力</string>
+    <string name="alarmRuleTitleString">ルールの種類</string>
+    <string name="typeDayOfWeek">曜日</string>
+    <string name="typeDate">日付</string>
+    <string name="typeCalendar">Google Calendarから選択</string>
+    <string name="alarmRulePlusAddString">＋ルールを追加</string>
+    <string name="alarmRuleMinusAddString">ールールを追加</string>
+    <string name="menuDeleteTitleString">削除</string>
+    <string name="alarmTypeDeleteAlarmString">アラームを削除</string>
+    <string name="typeBetween">期間</string>
+    <string name="typeBetweenStart">ここから</string>
+    <string name="typeBetweenEnd">ここまで</string>
+    <string name="typeGoogleAccount">Google Accountを選択</string>
+    <string name="alarmNoNext">未定</string>
+    <string name="alarmDateFormat">yyyy年M月d日</string>
+    <string name="alarmTimeTitleString">アラーム時刻</string>
+    <string name="alarmNextTitleString">次回予定</string>
+    <string name="alarmTypeSaveAlarmString">アラームを保存</string>
+    <string name="alarmRuleAddString">ルールを追加</string>
+    <string name="previewMonthFormat">yyyy年M月</string>
+    <string name="previewDateFormat">d</string>
+    <string name="targetAlarmDateFormat">yyyy年M月d日のアラーム一覧</string>
+    <string name="targetDateFormat">yyyy年M月d日</string>
+    <string name="targetDatePlusString">この日をアラーム対象に加えますか?</string>
+    <string name="targetDateMinusString">この日をアラーム対象から外しますか?</string>
+    <string name="previewCalculateStartString">計算中...</string>
+    <string name="previewCalculateCompleteString">計算完了</string>
+    <string name="previewCalculateCompleteWithConnectionFailString">計算完了(Google Calendarに接続出来ませんでした)
+    </string>
+    <string name="globalInformationString">情報</string>
+    <string name="alarmEnableMenuString">アラームを有効にする</string>
+    <string name="alarmDisableMenuString">アラームを無効にする</string>
+    <string name="noSelect">未選択</string>
+    <string name="alarmSettingSound">サウンド</string>
+    <string name="useSoundType">サウンドの使用</string>
+    <string name="useSoundTypeCheck">サウンドを使用する</string>
+    <string name="choiceSound">サウンドを選択</string>
+    <string name="soundType">サウンドの種類</string>
+    <string name="soundTypeAudio">オーディオ</string>
+    <string name="soundTypeRingtone">着信音</string>
+    <string name="alarmSettingScreen">画面</string>
+    <string name="alarmSettingVibration">バイブレーション</string>
+    <string name="keyguardSetting">キーガード設定</string>
+    <string name="disableKeyguardCheck">キーガードを解除する</string>
+    <string name="reenableKeyguardCheck">キーガードを復帰する</string>
+    <string name="informationTitleLabel">＋ーアラームについて</string>
+    <string name="libraryLicenseString">このアプリケーションは次のライブラリを使用しています</string>
+    <string name="licenseButtonString">ライセンスについて</string>
+    <string name="widgetSettingString">設定</string>
+    <string name="widgetSkipString">スキップ</string>
+    <string name="widgetConfigurationTitleString">ウィジットに表示するアラームを選択</string>
+    <string name="previewTitleString">プレビュー</string>
+    <string name="alarmTypeRuleTitleString">ルール一覧</string>
+    <string name="defaultRingtoneString">(デフォルト着信音)</string>
+    <string name="silentRingtoneString">サイレント</string>
+    <string name="needToCheckLeastOneString">少なくとも一つ以上選択してください</string>
+</resources>
