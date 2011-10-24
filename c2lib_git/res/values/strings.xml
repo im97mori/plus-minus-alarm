@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright (c) 2011 im97mori.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <string name="appName">+- Alarm</string>
+    <string name="developperName">im97mori</string>
+    <string name="versionName">3.0.0</string>
+    <string name="uaAppName">PlusMinusAlarm</string>
+    <string name="widgetSkipString">Skip</string>
+    <string name="widgetSettingString">Setting</string>
+    <string name="widgetConfigurationTitleString">Select alarm</string>
+    <string name="useSoundTypeCheck">Use sound</string>
+    <string name="typeGoogleAccount">Choice Google Account</string>
+    <string name="useSoundType">Sound setting</string>
+    <string name="typeDate">Date</string>
+    <string name="typeDayOfWeek">Day of week</string>
+    <string name="typeCalendar">Google Calendar</string>
+    <string name="typeBetweenStart">Start date (inclusive this)</string>
+    <string name="typeBetweenEnd">End date (inclusive this)</string>
+    <string name="typeBetween">Period</string>
+    <string name="targetDateMinusString">Exclude this date?</string>
+    <string name="targetDatePlusString">Include this date?</string>
+    <string name="targetAlarmDateFormat">\'Alarm of\' M/d/yyyy</string>
+    <string name="targetDateFormat">M/d/yyyy</string>
+    <string name="soundTypeAudio">Audio file</string>
+    <string name="soundTypeRingtone">Ringtone</string>
+    <string name="reenableKeyguardCheck">Reenable keyguard</string>
+    <string name="previewMonthFormat">M/yyyy</string>
+    <string name="previewDateFormat">d</string>
+    <string name="previewCalculateStartString">Calculating...</string>
+    <string name="previewCalculateCompleteString">Finished</string>
+    <string name="previewCalculateCompleteWithConnectionFailString">Finished(cannot connect to Google Calendar)
+    </string>
+    <string name="menuDeleteTitleString">Delete</string>
+    <string name="noSelect">Not selected</string>
+    <string name="licenseButtonString">License</string>
+    <string name="informationTitleLabel">About +-Alarm</string>
+    <string name="keyguardSetting">Keyguard</string>
+    <string name="globalInformationString">Information</string>
+    <string name="disableKeyguardCheck">Disable keyguard</string>
+    <string name="alarmTypeSaveAlarmString">Save alarm</string>
+    <string name="choiceSound">Choise sound</string>
+    <string name="alarmTypeDeleteAlarmString">Delete alarm</string>
+    <string name="alarmSettingSound">Sound</string>
+    <string name="alarmSettingScreen">Screen</string>
+    <string name="alarmSettingVibration">Vibration</string>
+    <string name="alarmSettingLabelString">Detail setting</string>
+    <string name="alarmRuleTitleString">Rule type</string>
+    <string name="alarmRulePlusAddString">Add +rule</string>
+    <string name="alarmRuleMinusAddString">Add -rule</string>
+    <string name="alarmRuleAddString">Add rule</string>
+    <string name="alarmNextTitleString">Next</string>
+    <string name="alarmNameTitleString">Alarm name</string>
+    <string name="alarmNameTitleErrorString">Input alarm name</string>
+    <string name="alarmNameHint">Input alarm name</string>
+    <string name="alarmListTitleString">Alarm list</string>
+    <string name="alarmEnableMenuString">Enable alarm</string>
+    <string name="alarmEditString">Edit alarm</string>
+    <string name="alarmDisableMenuString">Disable alarm</string>
+    <string name="alarmDateFormat">M/d/yyyy</string>
+    <string name="alarmAddTitleString">New alarm</string>
+    <string name="alarmAddString">Add alarm</string>
+    <string name="libraryLicenseString">Using libraries</string>
+    <string name="alarmTimeTitleString">Alarm at</string>
+    <string name="dayOfWeekFormat">E</string>
+    <string name="alarmNoNext">No ETA</string>
+    <string name="soundType">Sound type</string>
+    <string name="dayOfWeekLongFormat">EEEE</string>
+    <string name="previewTitleString">Preview</string>
+    <string name="alarmTypeRuleTitleString">Rule list</string>
+    <string name="defaultRingtoneString">(Default ringtone)</string>
+    <string name="silentRingtoneString">Silent</string>
+    <string name="needToCheckLeastOneString">Please select at least one</string>
+</resources>
