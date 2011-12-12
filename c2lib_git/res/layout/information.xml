@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2011 im97mori.
+<!--
+     Copyright (c) 2011 im97mori.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,116 +16,190 @@
 -->
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:padding="10dp">
-    <LinearLayout android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:orientation="vertical">
-        <LinearLayout android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:gravity="center_horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp" android:layout_marginBottom="20dp">
-            <ImageView android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:src="@drawable/icon" />
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/appName"
-                android:textSize="24sp" android:layout_gravity="center_vertical" />
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/versionName"
-                android:textSize="24sp" android:layout_gravity="center_vertical" />
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/appName"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/versionName"
+                android:textSize="24sp" />
         </LinearLayout>
-        <LinearLayout android:orientation="vertical"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:background="#11aaffbb">
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/libraryLicenseString"
-                android:gravity="center" android:textSize="18sp"
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#11aaffbb"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/libraryLicenseString"
+                android:textSize="18sp"
                 android:textStyle="bold" />
-            <LinearLayout android:layout_width="match_parent"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" android:layout_margin="5dp"
-                android:background="@drawable/border_blue">
-                <TextView android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:text="google-api-java-client"
+                android:layout_margin="5dp"
+                android:background="@drawable/border_blue"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/title_background"
-                    android:padding="2dp" android:textSize="16sp" />
+                    android:padding="2dp"
+                    android:text="google-api-java-client"
+                    android:textSize="16sp" />
 
-                <TextView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="google-api-client-1.4.1-beta.jar"
-                    android:paddingLeft="10dp" android:paddingTop="2dp"
-                    android:paddingBottom="2dp" />
-                <TextView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="google-api-client-extensions-android2-1.4.1-beta.jar"
-                    android:paddingLeft="10dp" android:paddingTop="2dp"
-                    android:paddingBottom="2dp" />
-                <TextView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="google-api-client-1.4.1-beta.jar"
-                    android:paddingLeft="10dp" android:paddingTop="2dp"
-                    android:paddingBottom="2dp" />
-                <TextView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="google-api-client-extensions-android3-1.4.1-beta.jar"
-                    android:paddingLeft="10dp" android:paddingTop="2dp"
-                    android:paddingBottom="2dp" />
-                <TextView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="google-api-client-googleapis-1.4.1-beta.jar"
-                    android:paddingLeft="10dp" android:paddingTop="2dp"
-                    android:paddingBottom="2dp" />
-                <TextView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="google-api-client-googleapis-extensions-android2-1.4.1-beta.jar"
-                    android:paddingLeft="10dp" android:paddingTop="2dp"
-                    android:paddingBottom="2dp" />
-
-                <Button android:id="@+id/licenseGoogleApiButton"
-                    android:text="@string/licenseButtonString"
-                    android:layout_gravity="center"
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="2dp"
+                    android:text="google-api-client-1.4.1-beta.jar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="2dp"
+                    android:text="google-api-client-extensions-android2-1.4.1-beta.jar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="2dp"
+                    android:text="google-api-client-1.4.1-beta.jar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="2dp"
+                    android:text="google-api-client-extensions-android3-1.4.1-beta.jar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="2dp"
+                    android:text="google-api-client-googleapis-1.4.1-beta.jar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="2dp"
+                    android:text="google-api-client-googleapis-extensions-android2-1.4.1-beta.jar" />
+
+                <Button
+                    android:id="@+id/licenseGoogleApiButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/licenseButtonString" />
             </LinearLayout>
-            <LinearLayout android:layout_width="match_parent"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" android:layout_margin="5dp"
-                android:background="@drawable/border_blue">
-                <TextView android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:text="guava-libraries"
+                android:layout_margin="5dp"
+                android:background="@drawable/border_blue"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/title_background"
-                    android:padding="2dp" android:textSize="16sp" />
+                    android:padding="2dp"
+                    android:text="guava-libraries"
+                    android:textSize="16sp" />
 
-                <TextView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="guava-r09.jar"
-                    android:paddingLeft="10dp" android:paddingTop="2dp"
-                    android:paddingBottom="2dp" />
-
-                <Button android:id="@+id/licenseGuavaButton"
-                    android:text="@string/licenseButtonString"
-                    android:layout_gravity="center"
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="2dp"
+                    android:text="guava-r09.jar" />
+
+                <Button
+                    android:id="@+id/licenseGuavaButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/licenseButtonString" />
             </LinearLayout>
-            <LinearLayout android:layout_width="match_parent"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" android:layout_margin="5dp"
-                android:background="@drawable/border_blue">
-                <TextView android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:text="Apache HttpComponents Client"
+                android:layout_margin="5dp"
+                android:background="@drawable/border_blue"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/title_background"
-                    android:padding="2dp" android:textSize="16sp" />
+                    android:padding="2dp"
+                    android:text="Apache HttpComponents Client"
+                    android:textSize="16sp" />
 
-                <TextView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="httpclient-4.0.3.jar"
-                    android:paddingLeft="10dp" android:paddingTop="2dp"
-                    android:paddingBottom="2dp" />
-
-                <Button android:id="@+id/licenseHttpClientButton"
-                    android:text="@string/licenseButtonString"
-                    android:layout_gravity="center"
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="2dp"
+                    android:text="httpclient-4.0.3.jar" />
+
+                <Button
+                    android:id="@+id/licenseHttpClientButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/licenseButtonString" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
 </ScrollView>

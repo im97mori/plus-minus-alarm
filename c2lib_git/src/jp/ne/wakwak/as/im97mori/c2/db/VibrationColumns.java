@@ -19,7 +19,7 @@ import android.provider.BaseColumns;
 public class VibrationColumns implements BaseColumns {
 
 	public static final String NAME = "NAME";
-	public static final String INDEX = "INDEX";
+	public static final String INDEX_NUMBER = "INDEX_NUMBER";
 	public static final String DURATION = "DURATION";
 	public static final String VIBRATION_ID = "VIBRATION_ID";
 }

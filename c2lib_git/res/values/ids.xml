@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2011 im97mori.
+<!--
+     Copyright (c) 2011 im97mori.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,8 +16,10 @@
 -->
 
 <resources>
-    <item type="id" name="previewDate" />
-    <item type="id" name="licenseGoogleApiDialog" />
-    <item type="id" name="licenseGuavaDialog" />
-    <item type="id" name="licenseHttpClientDialog" />
+
+    <item name="previewDate" type="id"/>
+    <item name="licenseGoogleApiDialog" type="id"/>
+    <item name="licenseGuavaDialog" type="id"/>
+    <item name="licenseHttpClientDialog" type="id"/>
+
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Copyright (c) 2011 im97mori.
+<!--
+     Copyright (c) 2011 im97mori.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,6 +15,7 @@
      limitations under the License.
 -->
 <resources>
+
     <string name="appName">＋ーアラーム</string>
     <string name="alarmListTitleString">アラーム一覧</string>
     <string name="alarmSettingLabelString">詳細設定</string>
@@ -23,6 +25,7 @@
     <string name="alarmNameTitleErrorString">アラーム名称を入力</string>
     <string name="alarmAddTitleString">アラーム新規作成</string>
     <string name="alarmNameHint">アラーム名称を入力</string>
+    <string name="alarmNameNeedInputString">アラーム名称が必要です</string>
     <string name="alarmRuleTitleString">ルールの種類</string>
     <string name="typeDayOfWeek">曜日</string>
     <string name="typeDate">日付</string>
@@ -62,6 +65,7 @@
     <string name="soundType">サウンドの種類</string>
     <string name="soundTypeAudio">オーディオ</string>
     <string name="soundTypeRingtone">着信音</string>
+    <string name="soundTypeVibration">パターン</string>
     <string name="alarmSettingScreen">画面</string>
     <string name="alarmSettingVibration">バイブレーション</string>
     <string name="keyguardSetting">キーガード設定</string>
@@ -78,4 +82,22 @@
     <string name="defaultRingtoneString">(デフォルト着信音)</string>
     <string name="silentRingtoneString">サイレント</string>
     <string name="needToCheckLeastOneString">少なくとも一つ以上選択してください</string>
+    <string name="useVibrationType">バイブレーション設定</string>
+    <string name="useVibrationTypeCheck">バイブレーションを使用する</string>
+    <string name="choiceVibrationPattern">バイブレーションパターンを選択</string>
+    <string name="editVibrationPattern">パターン編集</string>
+    <string name="vibrationAddString">パターン新規作成</string>
+    <string name="vibrationDetailNewRecordString">画面にタッチしてパターンを記録</string>
+    <string name="vibrationDetailReRecordString">画面にタッチするともう一度パターンを記録</string>
+    <string name="vibrationDetailRecordingString">記録中…</string>
+    <string name="vibrationDetailSaveString">パターンを保存</string>
+    <string name="vibrationAddTitleString">パターン新規作成</string>
+    <string name="vibrationNameTitleErrorString">パターン名称を入力</string>
+    <string name="vibrationNameHint">パターン名称を入力</string>
+    <string name="vibrationEditString">パターン名称編集</string>
+    <string name="vibrationNameNeedInputString">パターン名称が必要です</string>
+    <string name="noVibrationPattern">先にパターンの作成が必要です</string>
+    <string name="vibrationDetailNameTitleString">パターン名称</string>
+    <string name="vibrationDetailPatternEmptyString">パターンが作成されていません</string>
+
 </resources>

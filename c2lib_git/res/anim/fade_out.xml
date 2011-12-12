@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2011 im97mori.
+<!--
+     Copyright (c) 2011 im97mori.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,10 +15,18 @@
      limitations under the License.
 -->
 
-<set xmlns:android="http://schemas.android.com/apk/res/android">
-    <alpha android:fromAlpha="1.0" android:toAlpha="0.0"
-        android:fillBefore="true" android:fillAfter="true"
-        android:duration="@android:integer/config_mediumAnimTime" />
-    <translate android:fromYDelta="0" android:toYDelta="100%"
-        android:duration="@android:integer/config_mediumAnimTime" />
+<set xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <alpha
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fillAfter="true"
+        android:fillBefore="true"
+        android:fromAlpha="1.0"
+        android:toAlpha="0.0" />
+
+    <translate
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromYDelta="0"
+        android:toYDelta="100%" />
+
 </set>

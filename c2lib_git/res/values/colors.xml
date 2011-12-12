@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Copyright (c) 2011 im97mori.
+<!--
+     Copyright (c) 2011 im97mori.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,6 +16,7 @@
 -->
 
 <resources>
+
     <color name="clear">#00000000</color>
     <color name="border_blue">#FF222288</color>
     <color name="red">#FFFF0000</color>
@@ -22,4 +24,5 @@
     <color name="title_background">#22FFFFFF</color>
     <color name="type_plus">#88008800</color>
     <color name="type_minus">#88880000</color>
+
 </resources>

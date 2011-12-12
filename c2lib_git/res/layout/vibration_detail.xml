@@ -18,27 +18,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="10dp" >
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/vibrationDetailNameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/title_background"
-        android:text="@string/keyguardSetting"
-        android:textSize="24sp" />
+        android:clickable="true" >
 
-    <CheckBox
-        android:id="@+id/alarmSettingScreenDisableKeyguardCheck"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="@string/disableKeyguardCheck" />
+        <TextView
+            android:id="@+id/vibrationDetailNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="20sp" />
 
-    <CheckBox
-        android:id="@+id/alarmSettingScreenReenableKeyguardCheck"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/vibrationDetailNameText"
+            android:text="@string/vibrationDetailNameTitleString" />
+    </RelativeLayout>
+
+    <SurfaceView
+        android:id="@+id/vibrationDetailSurface"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="@string/reenableKeyguardCheck" />
+        android:layout_height="0px"
+        android:layout_weight="1" />
 
 </LinearLayout>

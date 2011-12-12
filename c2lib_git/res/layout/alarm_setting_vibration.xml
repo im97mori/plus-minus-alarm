@@ -24,28 +24,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/title_background"
-        android:text="@string/useSoundType"
+        android:text="@string/useVibrationType"
         android:textSize="24sp" />
 
     <CheckBox
-        android:id="@+id/alarmSettingSoundCheck"
+        android:id="@+id/alarmSettingVibrationCheck"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/useSoundTypeCheck" />
+        android:text="@string/useVibrationTypeCheck" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/title_background"
-        android:text="@string/choiceSound"
+        android:text="@string/choiceVibrationPattern"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/alarmSettingSoundSelect"
+        android:id="@+id/alarmSettingVibrationSelect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="false"
         android:text="@string/noSelect"
         android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/alarmSettingVibrationEditPatternButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/editVibrationPattern" />
 
 </LinearLayout>

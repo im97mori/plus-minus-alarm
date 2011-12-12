@@ -17,10 +17,12 @@ package jp.ne.wakwak.as.im97mori.c2.db;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import jp.ne.wakwak.as.im97mori.c2.util.Constants;
 import jp.ne.wakwak.as.im97mori.c2.vo.AlarmSettingVo;
 import jp.ne.wakwak.as.im97mori.c2.vo.AlarmTypeVo;
 import jp.ne.wakwak.as.im97mori.c2.vo.AlarmVo;
@@ -39,7 +41,7 @@ public class AlarmDb extends SQLiteOpenHelper {
 	private Context context;
 
 	public AlarmDb(Context context) {
-		this(context, null, 3);
+		this(context, null, 4);
 	}
 
 	public AlarmDb(Context context, CursorFactory factory, int version) {
@@ -51,8 +53,10 @@ public class AlarmDb extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS ALARM (_id INTEGER PRIMARY KEY ASC, NAME TEXT NOT NULL, TIME TEXT NOT NULL, NEXT INTEGER, ENABLE INTEGER DEFAULT 0, NEED_CALCULATE INTEGER DEFAULT 0)");
 		db.execSQL("CREATE TABLE IF NOT EXISTS ALARM_TYPE (_id INTEGER PRIMARY KEY ASC, TYPE INTEGER NOT NULL, TYPE_VALUE TEXT, SIGN INTEGER NOT NULL, ALARM_ID INTEGER NOT NULL, FOREIGN KEY (ALARM_ID) REFERENCES ALARM(_id) ON DELETE CASCADE)");
-		db.execSQL("CREATE TABLE IF NOT EXISTS ALARM_SETTING (_id, INTEGER PRIMARY KEY ASC, SETTING_TYPE INTEGER NOT NULL, TYPE_VALUE TEXT, ALARM_ID INTEGER NOT NULL, FOREIGN KEY (ALARM_ID) REFERENCES ALARM(_id) ON DELETE CASCADE)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS ALARM_SETTING (_id INTEGER PRIMARY KEY ASC, SETTING_TYPE INTEGER NOT NULL, TYPE_VALUE TEXT, ALARM_ID INTEGER NOT NULL, FOREIGN KEY (ALARM_ID) REFERENCES ALARM(_id) ON DELETE CASCADE)");
 		db.execSQL("CREATE TABLE IF NOT EXISTS GOOGLE_ACCOUNT (_id INTEGER PRIMARY KEY ASC, ACCOUNT TEXT NOT NULL, TOKEN TEXT NOT NULL)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS VIBRATION (_id INTEGER PRIMARY KEY ASC, NAME TEXT NOT NULL)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS VIBRATION_PATTERN (_id INTEGER PRIMARY KEY ASC, INDEX_NUMBER INTEGER NOT NULL, DURATION INTEGER NOT NULL, VIBRATION_ID INTEGER NOT NULL, FOREIGN KEY (VIBRATION_ID) REFERENCES VIBRATION(_id) ON DELETE CASCADE)");
 	}
 
 	@Override
@@ -84,7 +88,42 @@ public class AlarmDb extends SQLiteOpenHelper {
 		}
 		if (oldVersion < 3 && newVersion == 3) {
 			db.execSQL("CREATE TABLE IF NOT EXISTS VIBRATION (_id INTEGER PRIMARY KEY ASC, NAME TEXT NOT NULL)");
-			db.execSQL("CREATE TABLE IF NOT EXISTS VIBRATION_PATTERN (_id INTEGER PRIMARY KEY ASC, INDEX INTEGER NOT NULL, DURATION INTEGER NOT NULL, VIBRATION_ID INTEGER NOT NULL FORIGN KEY (VIBRATION_ID) REFERENCES VIBRATION(_id) ON DELETE CASCADE)");
+			db.execSQL("CREATE TABLE IF NOT EXISTS VIBRATION_PATTERN (_id INTEGER PRIMARY KEY ASC, INDEX_NUMBER INTEGER NOT NULL, DURATION INTEGER NOT NULL, VIBRATION_ID INTEGER NOT NULL, FOREIGN KEY (VIBRATION_ID) REFERENCES VIBRATION(_id) ON DELETE CASCADE)");
+		}
+		if (oldVersion < 4 && newVersion == 4) {
+			Cursor cursor = db.rawQuery("SELECT * FROM ALARM_SETTING",
+					new String[] { String
+							.valueOf(Constants.AlarmSetting.VIBRATION) });
+			List<AlarmSettingVo> list = new LinkedList<AlarmSettingVo>();
+			cursor.moveToFirst();
+			while (!cursor.isAfterLast()) {
+				AlarmSettingVo vo = new AlarmSettingVo();
+				vo.setAlarmId(cursor.getLong(cursor
+						.getColumnIndex(AlarmSettingColumns.ALARM_ID)));
+				vo.setSettingType(cursor.getInt(cursor
+						.getColumnIndex(AlarmSettingColumns.TYPE)));
+				vo.setTypeValue(cursor.getString(cursor
+						.getColumnIndex(AlarmSettingColumns.TYPE_VALUE)));
+				list.add(vo);
+			}
+			cursor.close();
+			db.execSQL("DROP TABLE IF EXISTS ALARM_SETTING");
+			db.execSQL("CREATE TABLE IF NOT EXISTS ALARM_SETTING (_id INTEGER PRIMARY KEY ASC, SETTING_TYPE INTEGER NOT NULL, TYPE_VALUE TEXT, ALARM_ID INTEGER NOT NULL, FOREIGN KEY (ALARM_ID) REFERENCES ALARM(_id) ON DELETE CASCADE)");
+
+			int index = 0;
+			SQLiteStatement statement = db
+					.compileStatement("INSERT INTO ALARM_SETTING(ALARM_ID, SETTING_TYPE, TYPE_VALUE) VALUES(?, ?, ?)");
+			Iterator<AlarmSettingVo> it = list.iterator();
+			while (it.hasNext()) {
+				AlarmSettingVo vo = it.next();
+				statement.clearBindings();
+				index = 0;
+
+				statement.bindLong(++index, vo.getAlarmId());
+				statement.bindLong(++index, vo.getSettingType());
+				statement.bindString(++index, vo.getTypeValue());
+				statement.executeInsert();
+			}
 		}
 	}
 
@@ -560,7 +599,8 @@ public class AlarmDb extends SQLiteOpenHelper {
 		}
 	}
 
-	public void addVibration(String name, long[] pattern) {
+	public long addVibration(String name, long[] pattern) {
+		long id = -1;
 		SQLiteDatabase db = null;
 		try {
 			db = this.getWritableDatabase();
@@ -569,11 +609,11 @@ public class AlarmDb extends SQLiteOpenHelper {
 			SQLiteStatement statement = db
 					.compileStatement("INSERT INTO VIBRATION(NAME) VALUES(?)");
 			statement.bindString(1, name);
-			long id = statement.executeInsert();
+			id = statement.executeInsert();
 			statement.close();
 
 			statement = db
-					.compileStatement("INSERT INTO VIBRATION_PATTERN(INDEX, DURATION, VIBRATION_ID) VALUES(?, ?, ?)");
+					.compileStatement("INSERT INTO VIBRATION_PATTERN(INDEX_NUMBER, DURATION, VIBRATION_ID) VALUES(?, ?, ?)");
 			int size = pattern.length;
 			int index = 0;
 			for (int i = 0; i < size; i++) {
@@ -593,6 +633,7 @@ public class AlarmDb extends SQLiteOpenHelper {
 				db.close();
 			}
 		}
+		return id;
 	}
 
 	public void updateVibration(long id, String name, long[] pattern) {
@@ -619,7 +660,7 @@ public class AlarmDb extends SQLiteOpenHelper {
 				statement.execute();
 
 				statement = db
-						.compileStatement("INSERT INTO VIBRATION_PATTERN(INDEX, DURATION, VIBRATION_ID) VALUES(?, ?, ?)");
+						.compileStatement("INSERT INTO VIBRATION_PATTERN(INDEX_NUMBER, DURATION, VIBRATION_ID) VALUES(?, ?, ?)");
 				int size = pattern.length;
 				for (int i = 0; i < size; i++) {
 					statement.clearBindings();
@@ -661,7 +702,7 @@ public class AlarmDb extends SQLiteOpenHelper {
 
 				cursor = db
 						.rawQuery(
-								"SELECT DURATION FROM VIBRATION_PATTERN WHERE VIBRATION_ID = ? ORDER BY INDEX",
+								"SELECT DURATION FROM VIBRATION_PATTERN WHERE VIBRATION_ID = ? ORDER BY INDEX_NUMBER",
 								new String[] { String.valueOf(id) });
 				cursor.moveToFirst();
 				int index = 0;
@@ -711,7 +752,7 @@ public class AlarmDb extends SQLiteOpenHelper {
 				VibrationVo vo = it.next();
 				cursor = db
 						.rawQuery(
-								"SELECT DURATION FROM VIBRATION_PATTERN WHERE VIBRATION_ID = ? ORDER BY INDEX",
+								"SELECT DURATION FROM VIBRATION_PATTERN WHERE VIBRATION_ID = ? ORDER BY INDEX_NUMBER",
 								new String[] { String.valueOf(vo.getId()) });
 				cursor.moveToFirst();
 				int index = 0;
@@ -736,5 +777,67 @@ public class AlarmDb extends SQLiteOpenHelper {
 		}
 
 		return list;
+	}
+
+	public void deleteVibration(long id) {
+		SQLiteDatabase db = null;
+		Cursor cursor = null;
+		synchronized (LOCK) {
+			try {
+				db = this.getWritableDatabase();
+				db.beginTransaction();
+
+				SQLiteStatement statement = db
+						.compileStatement("DELETE FROM VIBRATION WHERE _id = ?");
+				statement.bindLong(1, id);
+				statement.execute();
+				statement.close();
+
+				statement = db
+						.compileStatement("DELETE FROM VIBRATION_PATTERN WHERE VIBRATION_ID = ?");
+				statement.bindLong(1, id);
+				statement.execute();
+				statement.close();
+
+				List<Long> idList = new LinkedList<Long>();
+				cursor = db.rawQuery(
+						"SELECT * FROM ALARM_SETTING WHERE SETTING_TYPE = ?",
+						new String[] { String
+								.valueOf(Constants.AlarmSetting.VIBRATION) });
+				cursor.moveToFirst();
+				while (!cursor.isAfterLast()) {
+					String typeValue = cursor.getString(cursor
+							.getColumnIndex(AlarmSettingColumns.TYPE_VALUE));
+					long targetId = Long.valueOf(typeValue);
+					if (id == targetId) {
+						idList.add(cursor.getLong(cursor
+								.getColumnIndex(AlarmSettingColumns._ID)));
+					}
+					cursor.moveToNext();
+				}
+				cursor.close();
+
+				statement = db
+						.compileStatement("DELETE FROM ALARM_SETTING WHERE _id = ?");
+				Iterator<Long> it = idList.iterator();
+				while (it.hasNext()) {
+					long targetId = it.next();
+					statement.clearBindings();
+
+					statement.bindLong(1, targetId);
+					statement.execute();
+				}
+
+				db.setTransactionSuccessful();
+			} finally {
+				db.endTransaction();
+				if (cursor != null && !cursor.isClosed()) {
+					cursor.close();
+				}
+				if (db != null && db.isOpen()) {
+					db.close();
+				}
+			}
+		}
 	}
 }

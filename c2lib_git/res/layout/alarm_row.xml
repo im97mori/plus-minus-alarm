@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2011 im97mori.
+<!--
+     Copyright (c) 2011 im97mori.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,31 +16,60 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical">
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="@string/alarmNameTitleString" />
-        <TextView android:id="@+id/alarmRowNameText"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Large"
-            android:layout_weight="1" android:gravity="right" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alarmNameTitleString" />
+
+        <TextView
+            android:id="@+id/alarmRowNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textAppearance="@android:style/TextAppearance.Large" />
     </LinearLayout>
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="@string/alarmTimeTitleString" />
-        <TextView android:id="@+id/alarmRowTimeText"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_weight="1" android:gravity="right" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alarmTimeTitleString" />
+
+        <TextView
+            android:id="@+id/alarmRowTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" />
     </LinearLayout>
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="@string/alarmNextTitleString" />
-        <TextView android:id="@+id/alarmRowNextText"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_weight="1" android:gravity="right" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alarmNextTitleString" />
+
+        <TextView
+            android:id="@+id/alarmRowNextText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" />
     </LinearLayout>
+
 </LinearLayout>

@@ -15,17 +15,21 @@
      limitations under the License.
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
-    <ListView
-        android:id="@android:id/list"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:cacheColorHint="#00000000"
-        android:choiceMode="singleChoice"
-        android:scrollbarStyle="outsideOverlay" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp" >
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/vibrationNameValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/vibrationNameHint" />
+    </LinearLayout>
+
+</ScrollView>
