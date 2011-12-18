@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/alarmRowNameText"
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/alarmRowTimeText"
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right" />
@@ -66,7 +66,7 @@
 
         <TextView
             android:id="@+id/alarmRowNextText"
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right" />
