@@ -18,7 +18,7 @@ import android.provider.BaseColumns;
 
 public class AlarmSettingColumns implements BaseColumns {
 
-	public static final String TYPE = "TYPE";
+	public static final String SETTING_TYPE = "SETTING_TYPE";
 	public static final String TYPE_VALUE = "TYPE_VALUE";
 	public static final String ALARM_ID = "ALARM_ID";
 }

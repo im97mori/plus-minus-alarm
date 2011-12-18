@@ -91,9 +91,7 @@ public class AlarmDb extends SQLiteOpenHelper {
 			db.execSQL("CREATE TABLE IF NOT EXISTS VIBRATION_PATTERN (_id INTEGER PRIMARY KEY ASC, INDEX_NUMBER INTEGER NOT NULL, DURATION INTEGER NOT NULL, VIBRATION_ID INTEGER NOT NULL, FOREIGN KEY (VIBRATION_ID) REFERENCES VIBRATION(_id) ON DELETE CASCADE)");
 		}
 		if (oldVersion < 4 && newVersion == 4) {
-			Cursor cursor = db.rawQuery("SELECT * FROM ALARM_SETTING",
-					new String[] { String
-							.valueOf(Constants.AlarmSetting.VIBRATION) });
+			Cursor cursor = db.rawQuery("SELECT * FROM ALARM_SETTING", null);
 			List<AlarmSettingVo> list = new LinkedList<AlarmSettingVo>();
 			cursor.moveToFirst();
 			while (!cursor.isAfterLast()) {
@@ -101,10 +99,11 @@ public class AlarmDb extends SQLiteOpenHelper {
 				vo.setAlarmId(cursor.getLong(cursor
 						.getColumnIndex(AlarmSettingColumns.ALARM_ID)));
 				vo.setSettingType(cursor.getInt(cursor
-						.getColumnIndex(AlarmSettingColumns.TYPE)));
+						.getColumnIndex(AlarmSettingColumns.SETTING_TYPE)));
 				vo.setTypeValue(cursor.getString(cursor
 						.getColumnIndex(AlarmSettingColumns.TYPE_VALUE)));
 				list.add(vo);
+				cursor.moveToNext();
 			}
 			cursor.close();
 			db.execSQL("DROP TABLE IF EXISTS ALARM_SETTING");
@@ -124,6 +123,9 @@ public class AlarmDb extends SQLiteOpenHelper {
 				statement.bindString(++index, vo.getTypeValue());
 				statement.executeInsert();
 			}
+
+			db.execSQL("CREATE TABLE IF NOT EXISTS VIBRATION (_id INTEGER PRIMARY KEY ASC, NAME TEXT NOT NULL)");
+			db.execSQL("CREATE TABLE IF NOT EXISTS VIBRATION_PATTERN (_id INTEGER PRIMARY KEY ASC, INDEX_NUMBER INTEGER NOT NULL, DURATION INTEGER NOT NULL, VIBRATION_ID INTEGER NOT NULL, FOREIGN KEY (VIBRATION_ID) REFERENCES VIBRATION(_id) ON DELETE CASCADE)");
 		}
 	}
 
