@@ -16,18 +16,19 @@
 -->
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp" >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/informationTopLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
@@ -53,23 +54,30 @@
                 android:textSize="24sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/informationLicenseLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/informationTopLayout"
             android:background="#11aaffbb"
             android:orientation="vertical" >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/informationLicenseText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:gravity="center"
                 android:text="@string/libraryLicenseString"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/informationGoogleLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/informationLicenseText"
                 android:layout_margin="5dp"
                 android:background="@drawable/border_blue"
                 android:orientation="vertical" >
@@ -83,7 +91,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="2dp"
                     android:paddingLeft="10dp"
@@ -91,7 +99,7 @@
                     android:text="google-api-client-1.4.1-beta.jar" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="2dp"
                     android:paddingLeft="10dp"
@@ -99,7 +107,7 @@
                     android:text="google-api-client-extensions-android2-1.4.1-beta.jar" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="2dp"
                     android:paddingLeft="10dp"
@@ -107,7 +115,7 @@
                     android:text="google-api-client-1.4.1-beta.jar" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="2dp"
                     android:paddingLeft="10dp"
@@ -115,7 +123,7 @@
                     android:text="google-api-client-extensions-android3-1.4.1-beta.jar" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="2dp"
                     android:paddingLeft="10dp"
@@ -123,7 +131,7 @@
                     android:text="google-api-client-googleapis-1.4.1-beta.jar" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="2dp"
                     android:paddingLeft="10dp"
@@ -139,8 +147,10 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/informationGuavaLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/informationGoogleLayout"
                 android:layout_margin="5dp"
                 android:background="@drawable/border_blue"
                 android:orientation="vertical" >
@@ -154,7 +164,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="2dp"
                     android:paddingLeft="10dp"
@@ -172,6 +182,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/informationGuavaLayout"
                 android:layout_margin="5dp"
                 android:background="@drawable/border_blue"
                 android:orientation="vertical" >
@@ -185,7 +197,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="2dp"
                     android:paddingLeft="10dp"
@@ -199,7 +211,7 @@
                     android:layout_gravity="center"
                     android:text="@string/licenseButtonString" />
             </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
 
 </ScrollView>
