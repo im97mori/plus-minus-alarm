@@ -50,10 +50,9 @@
     <string name="targetDateFormat">yyyy年M月d日</string>
     <string name="targetDatePlusString">この日をアラーム対象に加えますか?</string>
     <string name="targetDateMinusString">この日をアラーム対象から外しますか?</string>
-    <string name="previewCalculateStartString">計算中...</string>
+    <string name="previewCalculateStartString">計算中…</string>
     <string name="previewCalculateCompleteString">計算完了</string>
-    <string name="previewCalculateCompleteWithConnectionFailString">計算完了(Google Calendarに接続出来ませんでした)
-    </string>
+    <string name="previewCalculateCompleteWithConnectionFailString">算完了(Google Calendarに接続出来ませんでした)</string>
     <string name="globalInformationString">情報</string>
     <string name="alarmEnableMenuString">アラームを有効にする</string>
     <string name="alarmDisableMenuString">アラームを無効にする</string>
@@ -99,5 +98,6 @@
     <string name="noVibrationPattern">先にパターンの作成が必要です</string>
     <string name="vibrationDetailNameTitleString">パターン名称</string>
     <string name="vibrationDetailPatternEmptyString">パターンが作成されていません</string>
+    <string name="vibrationListTitleString">バイブレーションパターン一覧</string>
 
 </resources>

@@ -42,10 +42,9 @@
     <string name="reenableKeyguardCheck">Reenable keyguard</string>
     <string name="previewMonthFormat">M/yyyy</string>
     <string name="previewDateFormat">d</string>
-    <string name="previewCalculateStartString">Calculating...</string>
+    <string name="previewCalculateStartString">Calculating…</string>
     <string name="previewCalculateCompleteString">Finished</string>
-    <string name="previewCalculateCompleteWithConnectionFailString">Finished(cannot connect to Google Calendar)
-    </string>
+    <string name="previewCalculateCompleteWithConnectionFailString">inished(cannot connect to Google Calendar)</string>
     <string name="menuDeleteTitleString">Delete</string>
     <string name="noSelect">Not selected</string>
     <string name="licenseButtonString">License</string>
@@ -94,7 +93,7 @@
     <string name="vibrationAddString">Create new pattern</string>
     <string name="vibrationDetailNewRecordString">Touch for record vibration pattern</string>
     <string name="vibrationDetailReRecordString">Touch for record vibration pattern again</string>
-    <string name="vibrationDetailRecordingString">Recording...</string>
+    <string name="vibrationDetailRecordingString">Recording…</string>
     <string name="vibrationDetailSaveString">Save pattern</string>
     <string name="vibrationNameHint">Input pattern name</string>
     <string name="vibrationEditString">Edit pattern name</string>
@@ -104,5 +103,6 @@
     <string name="noVibrationPattern">Add pattern first</string>
     <string name="vibrationDetailNameTitleString">Pattern name</string>
     <string name="vibrationDetailPatternEmptyString">No pattern recorded</string>
+    <string name="vibrationListTitleString">Vibration pattern list</string>
 
 </resources>
