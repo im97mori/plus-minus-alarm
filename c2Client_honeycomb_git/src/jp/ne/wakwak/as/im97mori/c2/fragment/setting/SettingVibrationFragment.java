@@ -14,21 +14,32 @@
 
 package jp.ne.wakwak.as.im97mori.c2.fragment.setting;
 
+import java.util.List;
+
 import jp.ne.wakwak.as.im97mori.c2.R;
+import jp.ne.wakwak.as.im97mori.c2.activity.VibrationActivity;
 import jp.ne.wakwak.as.im97mori.c2.db.AlarmDb;
 import jp.ne.wakwak.as.im97mori.c2.util.Constants;
 import jp.ne.wakwak.as.im97mori.c2.vo.AlarmSettingVo;
+import jp.ne.wakwak.as.im97mori.c2.vo.VibrationVo;
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class SettingVibrationFragment extends Fragment implements
-		OnCheckedChangeListener {
+		OnCheckedChangeListener, OnClickListener {
+
+	private OnSettingVibrationFragmentListener listener;
 
 	public static SettingVibrationFragment newInstance(long id) {
 		SettingVibrationFragment fragment = new SettingVibrationFragment();
@@ -38,52 +49,34 @@ public class SettingVibrationFragment extends Fragment implements
 		return fragment;
 	}
 
-	public static interface OnSettingScreenFragmentListener {
+	public static interface OnSettingVibrationFragmentListener {
+		void onVibrationPatternChoice();
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+
+		try {
+			listener = (OnSettingVibrationFragmentListener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement OnSettingVibrationFragmentListener");
+		}
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.alarm_setting_screen, null);
+		View view = inflater.inflate(R.layout.alarm_setting_vibration, null);
+		CheckBox checkBox = (CheckBox) view
+				.findViewById(R.id.alarmSettingVibrationCheck);
+		checkBox.setOnCheckedChangeListener(this);
 
-		Bundle bundle = this.getArguments();
-		AlarmDb db = new AlarmDb(this.getActivity());
-		AlarmSettingVo vo = db.getAlarmSetting(
-				bundle.getLong(Constants.ArgumentKey.ID),
-				Constants.AlarmSetting.SCREEN);
-		db.close();
-
-		CheckBox checkBox = null;
-		if (vo == null) {
-			checkBox = (CheckBox) view
-					.findViewById(R.id.alarmSettingScreenDisableKeyguardCheck);
-			checkBox.setOnCheckedChangeListener(this);
-			checkBox = (CheckBox) view
-					.findViewById(R.id.alarmSettingScreenReenableKeyguardCheck);
-			checkBox.setOnCheckedChangeListener(this);
-		} else {
-			String[] values = vo.getTypeValue().split("\n");
-			checkBox = (CheckBox) view
-					.findViewById(R.id.alarmSettingScreenDisableKeyguardCheck);
-			if (values[0].equals(Boolean.FALSE.toString())) {
-				checkBox.setChecked(false);
-			}
-			checkBox.setOnCheckedChangeListener(this);
-
-			boolean checked = checkBox.isChecked();
-			checkBox = (CheckBox) view
-					.findViewById(R.id.alarmSettingScreenReenableKeyguardCheck);
-
-			if (checked) {
-				if (values[1].equals(Boolean.FALSE.toString())) {
-					checkBox.setChecked(false);
-				}
-			} else {
-				checkBox.setChecked(false);
-				checkBox.setEnabled(false);
-			}
-			checkBox.setOnCheckedChangeListener(this);
-		}
+		view.findViewById(R.id.alarmSettingVibrationSelect).setOnClickListener(
+				this);
+		view.findViewById(R.id.alarmSettingVibrationEditPatternButton)
+				.setOnClickListener(this);
 
 		return view;
 	}
@@ -91,26 +84,77 @@ public class SettingVibrationFragment extends Fragment implements
 	@Override
 	public void onCheckedChanged(CompoundButton paramCompoundButton,
 			boolean paramBoolean) {
-		boolean disable = false;
-		boolean reenable = false;
-		if (paramCompoundButton.getId() == R.id.alarmSettingScreenDisableKeyguardCheck) {
-			disable = paramCompoundButton.isChecked();
-			paramCompoundButton = (CheckBox) this.getView().findViewById(
-					R.id.alarmSettingScreenReenableKeyguardCheck);
-			paramCompoundButton.setEnabled(disable);
-			reenable = paramCompoundButton.isChecked();
-		} else {
-			reenable = paramCompoundButton.isChecked();
-			paramCompoundButton = (CheckBox) this.getView().findViewById(
-					R.id.alarmSettingScreenDisableKeyguardCheck);
-			disable = paramCompoundButton.isChecked();
+		TextView textView = (TextView) this.getView().findViewById(
+				R.id.alarmSettingVibrationSelect);
+		textView.setText(this.getString(R.string.noSelect));
+		textView.setClickable(paramBoolean);
+		if (!paramBoolean) {
+			AlarmDb db = new AlarmDb(this.getActivity());
+			Bundle bundle = this.getArguments();
+			db.deleteAlarmSetting(bundle.getLong(Constants.ArgumentKey.ID),
+					Constants.AlarmSetting.VIBRATION);
+			db.close();
 		}
+	}
 
+	@Override
+	public void onClick(View v) {
+		if (v.getId() == R.id.alarmSettingVibrationSelect) {
+			AlarmDb db = new AlarmDb(this.getActivity());
+			List<VibrationVo> list = db.getVibrationList();
+			db.close();
+
+			if (list.size() > 0 && this.listener != null) {
+				this.listener.onVibrationPatternChoice();
+			} else {
+				Toast.makeText(this.getActivity(), R.string.noVibrationPattern,
+						Toast.LENGTH_SHORT).show();
+			}
+		} else if (v.getId() == R.id.alarmSettingVibrationEditPatternButton) {
+			Intent intent = new Intent(this.getActivity()
+					.getApplicationContext(), VibrationActivity.class);
+			this.startActivity(intent);
+		}
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		Bundle bundle = this.getArguments();
+		AlarmDb db = new AlarmDb(this.getActivity());
+		AlarmSettingVo vo = db.getAlarmSetting(
+				bundle.getLong(Constants.ArgumentKey.ID),
+				Constants.AlarmSetting.VIBRATION);
+
+		CheckBox checkBox = (CheckBox) this.getView().findViewById(
+				R.id.alarmSettingVibrationCheck);
+		TextView textView = (TextView) this.getView().findViewById(
+				R.id.alarmSettingVibrationSelect);
+		if (vo == null) {
+			checkBox.setChecked(false);
+			textView.setClickable(false);
+		} else {
+			checkBox.setChecked(true);
+			textView.setClickable(true);
+
+			long vibrationId = Long.valueOf(vo.getTypeValue());
+			VibrationVo vibrationVo = db.getVibration(vibrationId);
+
+			textView.setText(vibrationVo.getName());
+		}
+		db.close();
+	}
+
+	public void onVibrationPatternSelected(long id, String name) {
 		AlarmDb db = new AlarmDb(this.getActivity());
 		Bundle bundle = this.getArguments();
 		db.setAlarmSetting(bundle.getLong(Constants.ArgumentKey.ID),
-				Constants.AlarmSetting.SCREEN, Boolean.toString(disable) + "\n"
-						+ Boolean.toString(reenable));
+				Constants.AlarmSetting.VIBRATION, String.valueOf(id));
 		db.close();
+
+		TextView textView = (TextView) this.getView().findViewById(
+				R.id.alarmSettingVibrationSelect);
+		textView.setText(name);
 	}
 }

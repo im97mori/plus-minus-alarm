@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2011 im97mori.
+<!--
+     Copyright (c) 2011 im97mori.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,24 +16,44 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:orientation="vertical" android:background="@drawable/widget_item">
-    <TextView android:id="@+id/widgetItemNameText"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:gravity="right" android:layout_margin="5dp" />
-    <TextView android:id="@+id/widgetItemNextText"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:gravity="right" android:layout_margin="5dp" />
-    <RelativeLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button android:id="@+id/widgetItemSkipButton"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/widgetSkipString"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/widget_item"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/widgetItemNameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="right" />
+
+    <TextView
+        android:id="@+id/widgetItemNextText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="right" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/widgetItemSkipButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:drawableLeft="@android:drawable/ic_media_next" />
-        <ProgressBar android:id="@android:id/progress"
+            android:drawableLeft="@android:drawable/ic_media_next"
+            android:text="@string/widgetSkipString" />
+
+        <ProgressBar
+            android:id="@android:id/progress"
             style="?android:attr/progressBarStyleSmall"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_centerInParent="true" android:visibility="invisible" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible" />
     </RelativeLayout>
+
 </LinearLayout>

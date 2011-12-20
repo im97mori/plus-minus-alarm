@@ -24,11 +24,14 @@ import jp.ne.wakwak.as.im97mori.c2.fragment.setting.SettingSoundFragment;
 import jp.ne.wakwak.as.im97mori.c2.fragment.setting.SettingSoundFragment.OnSettingSoundFragmentListener;
 import jp.ne.wakwak.as.im97mori.c2.fragment.setting.SettingSoundTypeFragment;
 import jp.ne.wakwak.as.im97mori.c2.fragment.setting.SettingSoundTypeFragment.OnSettingSoundTypeFragmentListener;
+import jp.ne.wakwak.as.im97mori.c2.fragment.setting.SettingVibrationFragment;
+import jp.ne.wakwak.as.im97mori.c2.fragment.setting.SettingVibrationFragment.OnSettingVibrationFragmentListener;
+import jp.ne.wakwak.as.im97mori.c2.fragment.setting.SettingVibrationPatternFragment;
+import jp.ne.wakwak.as.im97mori.c2.fragment.setting.SettingVibrationPatternFragment.OnSettingVibrationPatternFragmentListener;
 import jp.ne.wakwak.as.im97mori.c2.util.Constants;
 import jp.ne.wakwak.as.im97mori.c2.vo.AlarmSettingVo;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -40,9 +43,11 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.MenuItem;
 
-public class AlarmSettingActivity extends Activity implements
+public class AlarmSettingActivity extends BaseActivity implements
 		OnAlarmSettingFragmentListener, OnSettingSoundFragmentListener,
-		OnSettingSoundTypeFragmentListener, OnSettingAudioFragmentListener {
+		OnSettingSoundTypeFragmentListener, OnSettingAudioFragmentListener,
+		OnSettingVibrationFragmentListener,
+		OnSettingVibrationPatternFragmentListener {
 
 	private static final String TAG_SETTING_DIALOG = "settingDialog";
 
@@ -84,20 +89,6 @@ public class AlarmSettingActivity extends Activity implements
 		transaction.commit();
 	}
 
-	private void showDialogFragment(DialogFragment fragment, String tag) {
-		FragmentTransaction ft = this.getFragmentManager().beginTransaction();
-		fragment.show(ft, tag);
-	}
-
-	private void dismissDialog(String tag) {
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
-		Fragment prev = getFragmentManager().findFragmentByTag(tag);
-		if (prev != null) {
-			ft.remove(prev);
-		}
-		ft.commit();
-	}
-
 	@Override
 	public void onSelect(int id) {
 		Intent intent = this.getIntent();
@@ -109,7 +100,8 @@ public class AlarmSettingActivity extends Activity implements
 			fragment = SettingScreenFragment.newInstance(intent.getLongExtra(
 					Constants.IntentKey.ID, 1));
 		} else if (id == Constants.AlarmSetting.VIBRATION) {
-			// TODO
+			fragment = SettingVibrationFragment.newInstance(intent
+					.getLongExtra(Constants.IntentKey.ID, 1));
 		}
 
 		this.changeListFragment(fragment);
@@ -194,8 +186,6 @@ public class AlarmSettingActivity extends Activity implements
 
 	@Override
 	public void onSoundTypeAudioChoice(long id, String name) {
-		this.dismissDialog(TAG_SETTING_DIALOG);
-
 		FragmentManager fragmentManager = this.getFragmentManager();
 		Fragment fragment = fragmentManager
 				.findFragmentById(R.id.alarmSettingDetailLayout);
@@ -219,7 +209,33 @@ public class AlarmSettingActivity extends Activity implements
 	}
 
 	@Override
-	public void onSoundTypeAudioChoiceCancel() {
-		this.dismissDialog(TAG_SETTING_DIALOG);
+	public void onVibrationPatternChoice() {
+		Intent intent = this.getIntent();
+		long id = intent.getLongExtra(Constants.IntentKey.ID,
+				Constants.TEMPOLARY_ID);
+		AlarmDb db = new AlarmDb(this);
+		AlarmSettingVo vo = db.getAlarmSetting(id,
+				Constants.AlarmSetting.VIBRATION);
+		db.close();
+
+		long patternIid = -1;
+		if (vo != null) {
+			patternIid = Long.valueOf(vo.getTypeValue());
+		}
+
+		SettingVibrationPatternFragment fragment = SettingVibrationPatternFragment
+				.newInstance(patternIid);
+		this.showDialogFragment(fragment, TAG_SETTING_DIALOG);
+	}
+
+	@Override
+	public void onVibrationPatternChoice(long id, String name) {
+		FragmentManager fragmentManager = this.getFragmentManager();
+		Fragment fragment = fragmentManager
+				.findFragmentById(R.id.alarmSettingDetailLayout);
+		if (fragment != null && fragment instanceof SettingVibrationFragment) {
+			SettingVibrationFragment vibrationFragment = (SettingVibrationFragment) fragment;
+			vibrationFragment.onVibrationPatternSelected(id, name);
+		}
 	}
 }

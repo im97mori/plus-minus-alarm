@@ -12,10 +12,7 @@
  * the License.
  */
 
-package jp.ne.wakwak.as.im97mori.c2.fragment;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+package jp.ne.wakwak.as.im97mori.c2.fragment.vibration;
 
 import jp.ne.wakwak.as.im97mori.c2.R;
 import jp.ne.wakwak.as.im97mori.c2.util.Constants;
@@ -32,27 +29,22 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
-public class AlarmNameFragment extends DialogFragment implements
-		OnClickListener, TextWatcher {
+public class VibrationNameFragment extends DialogFragment implements
+		TextWatcher, OnClickListener {
 
-	private OnAlarmNameFragmentListener listener;
+	private OnVibrationNameFragmentListener listener;
 
-	public static AlarmNameFragment newInstance() {
-		AlarmNameFragment fragment = new AlarmNameFragment();
+	public static VibrationNameFragment newInstance() {
+		VibrationNameFragment fragment = new VibrationNameFragment();
 		return fragment;
 	}
 
-	public static AlarmNameFragment newInstance(String name, String time,
-			int enable) {
-		AlarmNameFragment fragment = new AlarmNameFragment();
+	public static VibrationNameFragment newInstance(String name) {
+		VibrationNameFragment fragment = new VibrationNameFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString(Constants.ArgumentKey.NAME, name);
-		bundle.putString(Constants.ArgumentKey.TIME, time);
-		bundle.putInt(Constants.ArgumentKey.ENABLE, enable);
 		fragment.setArguments(bundle);
 		return fragment;
 	}
@@ -62,10 +54,10 @@ public class AlarmNameFragment extends DialogFragment implements
 		super.onAttach(activity);
 
 		try {
-			listener = (OnAlarmNameFragmentListener) activity;
+			listener = (OnVibrationNameFragmentListener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
-					+ " must implement OnAlarmNameFragmentListener");
+					+ " must implement OnVibrationNameFragmentListener");
 		}
 	}
 
@@ -79,44 +71,27 @@ public class AlarmNameFragment extends DialogFragment implements
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				this.getActivity());
-		builder.setTitle(this.getString(R.string.soundTypeAudio));
 		builder.setPositiveButton(android.R.string.ok, this);
 		builder.setNegativeButton(android.R.string.cancel, this);
 
 		View view = LayoutInflater.from(this.getActivity()).inflate(
-				R.layout.alarm_name, null, false);
-		TimePicker picker = (TimePicker) view.findViewById(R.id.alarmNameTime);
-		picker.setIs24HourView(true);
+				R.layout.vibration_name, null, false);
 
-		TextView textView = (TextView) view.findViewById(R.id.alarmNameValue);
+		TextView textView = (TextView) view
+				.findViewById(R.id.vibrationNameValue);
 
 		Bundle bundle = this.getArguments();
 		if (bundle != null && bundle.containsKey(Constants.ArgumentKey.NAME)) {
-			String[] time = bundle.getString(Constants.ArgumentKey.TIME).split(
-					":");
-			picker.setCurrentHour(Integer.parseInt(time[0]));
-			picker.setCurrentMinute(Integer.parseInt(time[1]));
-
 			textView.setText(bundle.getString(Constants.ArgumentKey.NAME));
-
-			CompoundButton toggleButton = (CompoundButton) view
-					.findViewById(R.id.alarmNameEnableToggle);
-			if (bundle.getInt(Constants.ArgumentKey.ENABLE) == Constants.AlarmEnable.ALARM_ENABLED) {
-				toggleButton.setChecked(true);
-			} else {
-				toggleButton.setChecked(false);
-			}
-		} else {
-			Calendar calendar = GregorianCalendar.getInstance();
-			picker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
 		}
 		textView.addTextChangedListener(this);
 
 		if (bundle != null && bundle.containsKey(Constants.ArgumentKey.NAME)) {
-			builder.setTitle(this.getString(R.string.alarmEditString));
+			builder.setTitle(this.getString(R.string.vibrationEditString));
 		} else {
-			builder.setTitle(this.getString(R.string.alarmAddTitleString));
+			builder.setTitle(this.getString(R.string.vibrationAddTitleString));
 		}
+
 		builder.setView(view);
 		Dialog dialog = builder.create();
 		dialog.getWindow().setSoftInputMode(
@@ -124,44 +99,27 @@ public class AlarmNameFragment extends DialogFragment implements
 		return dialog;
 	}
 
-	public interface OnAlarmNameFragmentListener {
-		void onAlarmNameOk(String name, String time, int enable);
+	public interface OnVibrationNameFragmentListener {
+		void onVibrationNameOk(String name);
 	}
 
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
 		if (which == DialogInterface.BUTTON_POSITIVE) {
-			TimePicker picker = (TimePicker) this.getDialog().findViewById(
-					R.id.alarmNameTime);
-			picker.clearFocus();
 			TextView textView = (TextView) this.getDialog().findViewById(
-					R.id.alarmNameValue);
+					R.id.vibrationNameValue);
 			String name = textView.getText().toString();
-			StringBuilder sb = new StringBuilder("0");
-			sb.append(picker.getCurrentHour());
-			String hour = sb.substring(sb.length() - 2, sb.length());
-			sb.setLength(0);
-			sb.append("0");
-			sb.append(picker.getCurrentMinute());
-			String minute = sb.substring(sb.length() - 2, sb.length());
-			String time = hour + ":" + minute;
-			CompoundButton toggleButton = (CompoundButton) this.getDialog()
-					.findViewById(R.id.alarmNameEnableToggle);
-			int enable = Constants.AlarmEnable.ALARM_DISABLED;
-			if (toggleButton.isChecked()) {
-				enable = Constants.AlarmEnable.ALARM_ENABLED;
-			}
-			this.listener.onAlarmNameOk(name, time, enable);
+			this.listener.onVibrationNameOk(name);
 		}
 	}
 
 	@Override
 	public void afterTextChanged(Editable s) {
 		TextView textView = (TextView) this.getDialog().findViewById(
-				R.id.alarmNameValue);
+				R.id.vibrationNameValue);
 		if (TextUtils.isEmpty(s)) {
 			textView.setError(this
-					.getString(R.string.alarmNameTitleErrorString));
+					.getString(R.string.vibrationNameTitleErrorString));
 		} else {
 			textView.setError(null);
 		}

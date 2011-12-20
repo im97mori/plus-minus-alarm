@@ -22,7 +22,9 @@ import jp.ne.wakwak.as.im97mori.c2.util.Constants;
 import jp.ne.wakwak.as.im97mori.c2.vo.AlarmSettingListVo;
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +66,7 @@ public class AlarmSettingFragment extends ListFragment {
 	}
 
 	private void createList() {
-		List<AlarmSettingListVo> list = new ArrayList<AlarmSettingListVo>(2);
+		List<AlarmSettingListVo> list = new ArrayList<AlarmSettingListVo>(3);
 
 		AlarmSettingListVo vo = new AlarmSettingListVo();
 		vo.setTypeId(Constants.AlarmSetting.SOUND);
@@ -76,17 +78,20 @@ public class AlarmSettingFragment extends ListFragment {
 		vo.setTypeNameId(R.string.alarmSettingScreen);
 		list.add(vo);
 
-		vo = new AlarmSettingListVo();
-		vo.setTypeId(Constants.AlarmSetting.VIBRATION);
-		vo.setTypeNameId(R.string.alarmSettingVibration);
-		list.add(vo);
+		Vibrator vibrator = (Vibrator) this.getActivity().getSystemService(
+				Context.VIBRATOR_SERVICE);
+		if (vibrator.hasVibrator()) {
+			vo = new AlarmSettingListVo();
+			vo.setTypeId(Constants.AlarmSetting.VIBRATION);
+			vo.setTypeNameId(R.string.alarmSettingVibration);
+			list.add(vo);
+		}
 
 		AlarmSettingAdapter adapter = new AlarmSettingAdapter(list);
 		this.setListAdapter(adapter);
 		ListView listView = this.getListView();
 		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		listView.setItemChecked(0, true);
-
 	}
 
 	private class AlarmSettingAdapter extends ArrayAdapter<AlarmSettingListVo> {

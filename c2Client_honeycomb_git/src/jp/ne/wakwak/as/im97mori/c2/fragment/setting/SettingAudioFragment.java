@@ -75,7 +75,7 @@ public class SettingAudioFragment extends DialogFragment implements
 				this.getActivity());
 		builder.setTitle(this.getString(R.string.soundTypeAudio));
 		builder.setPositiveButton(android.R.string.ok, this);
-		builder.setNegativeButton(android.R.string.cancel, this);
+		builder.setNegativeButton(android.R.string.cancel, null);
 
 		View view = LayoutInflater.from(this.getActivity()).inflate(
 				R.layout.alarm_setting_sound_audio_choice, null, false);
@@ -113,8 +113,6 @@ public class SettingAudioFragment extends DialogFragment implements
 
 	public interface OnSettingAudioFragmentListener {
 		void onSoundTypeAudioChoice(long id, String name);
-
-		void onSoundTypeAudioChoiceCancel();
 	}
 
 	private class AudioAdapter extends SimpleCursorAdapter {
@@ -154,9 +152,7 @@ public class SettingAudioFragment extends DialogFragment implements
 			if (which == DialogInterface.BUTTON_POSITIVE) {
 				int position = listView.getCheckedItemPosition();
 				Cursor cursor = (Cursor) listView.getItemAtPosition(position);
-				if (cursor == null) {
-					this.listener.onSoundTypeAudioChoiceCancel();
-				} else {
+				if (cursor != null) {
 					long id = cursor.getLong(cursor
 							.getColumnIndex(MediaStore.MediaColumns._ID));
 					String name = cursor
@@ -164,8 +160,6 @@ public class SettingAudioFragment extends DialogFragment implements
 									.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME));
 					this.listener.onSoundTypeAudioChoice(id, name);
 				}
-			} else if (which == DialogInterface.BUTTON_NEGATIVE) {
-				this.listener.onSoundTypeAudioChoiceCancel();
 			}
 		}
 	}

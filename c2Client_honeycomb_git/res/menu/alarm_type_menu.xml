@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2011 im97mori.
+<!--
+     Copyright (c) 2011 im97mori.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,24 +15,35 @@
      limitations under the License.
 -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/alarmRuleAddString" android:icon="@android:drawable/ic_menu_add"
-        android:showAsAction="ifRoom|withText">
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:icon="@android:drawable/ic_menu_add"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/alarmRuleAddString">
         <menu>
-            <item android:id="@+id/alarmTypePlusAddMenu"
-                android:title="@string/alarmRulePlusAddString"
-                android:showAsAction="ifRoom|withText" />
-            <item android:id="@+id/alarmTypeMinusAddMenu"
-                android:title="@string/alarmRuleMinusAddString"
-                android:showAsAction="ifRoom|withText" />
+            <item
+                android:id="@+id/alarmTypePlusAddMenu"
+                android:showAsAction="ifRoom|withText"
+                android:title="@string/alarmRulePlusAddString"/>
+            <item
+                android:id="@+id/alarmTypeMinusAddMenu"
+                android:showAsAction="ifRoom|withText"
+                android:title="@string/alarmRuleMinusAddString"/>
         </menu>
     </item>
-    <item android:id="@+id/alarmTypeSaveMenu" android:title="@string/alarmTypeSaveAlarmString"
+    <item
+        android:id="@+id/alarmTypeSaveMenu"
         android:icon="@android:drawable/ic_menu_save"
-        android:showAsAction="ifRoom|withText" />
-    <item android:id="@+id/alarmTypeDeleteMenu" android:title="@string/alarmTypeDeleteAlarmString"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/alarmTypeSaveAlarmString"/>
+    <item
+        android:id="@+id/alarmTypeDeleteMenu"
         android:icon="@android:drawable/ic_menu_delete"
-        android:showAsAction="ifRoom|withText" />
-    <item android:id="@+id/alarmTypeDetailSettingMenu"
-        android:title="@string/alarmSettingLabelString" />
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/alarmTypeDeleteAlarmString"/>
+    <item
+        android:id="@+id/alarmTypeDetailSettingMenu"
+        android:title="@string/alarmSettingLabelString"/>
+
 </menu>

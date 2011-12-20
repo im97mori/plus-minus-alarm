@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2011 im97mori.
+<!--
+     Copyright (c) 2011 im97mori.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,17 +15,31 @@
      limitations under the License.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <TextView android:id="@+id/previewDate" android:gravity="center_vertical|right"
-        android:paddingLeft="0px" android:paddingTop="5px"
-        android:paddingRight="0px" android:paddingBottom="0px"
-        android:textSize="18sp" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/previewDate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" />
-    <ImageView android:id="@+id/previewImage"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@drawable/on" android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical|right"
+        android:paddingBottom="0px"
+        android:paddingLeft="0px"
+        android:paddingRight="0px"
+        android:paddingTop="5px"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/previewImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_below="@id/previewDate"
-        android:layout_centerHorizontal="true" android:visibility="invisible"
-        android:adjustViewBounds="true" android:scaleType="fitEnd" />
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitEnd"
+        android:src="@drawable/on"
+        android:visibility="invisible" />
+
 </RelativeLayout>

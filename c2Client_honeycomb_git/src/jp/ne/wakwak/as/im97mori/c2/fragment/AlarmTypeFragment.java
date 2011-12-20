@@ -141,7 +141,7 @@ public class AlarmTypeFragment extends ListFragment implements
 	@Override
 	public void onDetach() {
 		super.onDetach();
-		this.listener.onShowAll();
+//		this.listener.onShowAll();
 		this.listener = null;
 	}
 

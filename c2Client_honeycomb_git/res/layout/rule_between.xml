@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2011 im97mori.
+<!--
+     Copyright (c) 2011 im97mori.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,37 +16,63 @@
 -->
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content" android:layout_height="wrap_content">
-    <LinearLayout android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:padding="5dp">
-        <LinearLayout android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:orientation="vertical">
-            <TextView android:text="@string/typeBetweenStart"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:text="@string/typeBetweenStart"
                 android:textSize="18sp" />
-            <DatePicker android:id="@+id/ruleBetweenStartPicker"
+
+            <DatePicker
+                android:id="@+id/ruleBetweenStartPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:calendarViewShown="false" android:spinnersShown="true"
-                android:background="@drawable/border_blue" />
+                android:background="@drawable/border_blue"
+                android:calendarViewShown="false"
+                android:spinnersShown="true" />
         </LinearLayout>
-        <TextView android:text="-" android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_gravity="center_vertical"
-            android:textSize="36sp" android:layout_margin="5dp" />
-        <LinearLayout android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:orientation="vertical">
-            <TextView android:text="@string/typeBetweenEnd"
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:text="-"
+            android:textSize="36sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:text="@string/typeBetweenEnd"
                 android:textSize="18sp" />
-            <DatePicker android:id="@+id/ruleBetweenEndPicker"
+
+            <DatePicker
+                android:id="@+id/ruleBetweenEndPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:calendarViewShown="false" android:spinnersShown="true"
-                android:background="@drawable/border_blue" />
+                android:background="@drawable/border_blue"
+                android:calendarViewShown="false"
+                android:spinnersShown="true" />
         </LinearLayout>
     </LinearLayout>
+
 </ScrollView>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2011 im97mori.
+<!--
+     Copyright (c) 2011 im97mori.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,17 +16,28 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:weightSum="3">
-    <FrameLayout android:id="@+id/listFragment"
-        android:layout_weight="1" android:layout_width="0px"
-        android:layout_height="match_parent" android:padding="15dp"
-        android:layout_margin="15dp" android:background="@drawable/border_blue">
-    </FrameLayout>
-    <fragment android:id="@+id/preview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="3" >
+
+    <FrameLayout
+        android:id="@+id/listFragment"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_blue"
+        android:padding="15dp" />
+
+    <fragment
+        android:id="@+id/preview"
         android:name="jp.ne.wakwak.as.im97mori.c2.fragment.PreviewFragment"
-        android:layout_weight="2" android:layout_width="0px"
-        android:layout_height="match_parent" android:layout_marginRight="15dp" >
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_marginRight="15dp"
+        android:layout_weight="2" >
+
         <!-- Preview: layout=@layout/preview -->
     </fragment>
+
 </LinearLayout>

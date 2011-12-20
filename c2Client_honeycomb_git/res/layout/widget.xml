@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2011 im97mori.
+<!--
+     Copyright (c) 2011 im97mori.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,13 +16,26 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="@color/title_background">
-    <GridView android:id="@+id/widgetGrid"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:numColumns="auto_fit" android:layout_weight="1"
-        android:layout_margin="1dp" android:scrollbarStyle="outsideOverlay" />
-    <Button android:id="@+id/widgetSettingButton" android:text="@string/widgetSettingString"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" android:drawableLeft="@drawable/icon" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/title_background"
+    android:orientation="vertical" >
+
+    <GridView
+        android:id="@+id/widgetGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:layout_margin="1dp"
+        android:layout_weight="1"
+        android:numColumns="auto_fit"
+        android:scrollbarStyle="outsideOverlay" />
+
+    <Button
+        android:id="@+id/widgetSettingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:drawableLeft="@drawable/icon"
+        android:text="@string/widgetSettingString" />
+
 </LinearLayout>

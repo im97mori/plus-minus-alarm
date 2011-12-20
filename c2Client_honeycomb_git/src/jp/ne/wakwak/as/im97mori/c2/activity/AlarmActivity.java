@@ -20,8 +20,10 @@ import jp.ne.wakwak.as.im97mori.c2.R;
 import jp.ne.wakwak.as.im97mori.c2.db.AlarmDb;
 import jp.ne.wakwak.as.im97mori.c2.service.ScreenService;
 import jp.ne.wakwak.as.im97mori.c2.util.Constants;
+import jp.ne.wakwak.as.im97mori.c2.util.Util;
 import jp.ne.wakwak.as.im97mori.c2.vo.AlarmSettingVo;
 import jp.ne.wakwak.as.im97mori.c2.vo.AlarmVo;
+import jp.ne.wakwak.as.im97mori.c2.vo.VibrationVo;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -35,6 +37,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,6 +46,7 @@ public class AlarmActivity extends Activity implements OnClickListener {
 
 	private MediaPlayer player;
 	private Ringtone ringtone;
+	private Vibrator vibartor;
 
 	private WakeLock wakeLock;
 
@@ -88,6 +92,9 @@ public class AlarmActivity extends Activity implements OnClickListener {
 		} else if (this.ringtone != null) {
 			this.ringtone.stop();
 			this.ringtone = null;
+		} else if (this.vibartor != null) {
+			this.vibartor.cancel();
+			this.vibartor = null;
 		}
 	}
 
@@ -148,6 +155,15 @@ public class AlarmActivity extends Activity implements OnClickListener {
 				ringtone = RingtoneManager.getRingtone(this, uri);
 				ringtone.play();
 			}
+		}
+
+		settingVo = db.getAlarmSetting(id, Constants.AlarmSetting.VIBRATION);
+		if (settingVo != null) {
+			VibrationVo vibrationVo = db.getVibration(Long.parseLong(settingVo
+					.getTypeValue()));
+			this.vibartor = (Vibrator) this
+					.getSystemService(Context.VIBRATOR_SERVICE);
+			Util.vibrate(this.vibartor, vibrationVo.getPattern());
 		}
 		db.close();
 

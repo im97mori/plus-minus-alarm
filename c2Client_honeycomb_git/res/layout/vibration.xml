@@ -18,21 +18,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/alarm_setting_padding"
     android:weightSum="3" >
 
     <fragment
-        android:id="@+id/alarmSettingList"
-        android:name="jp.ne.wakwak.as.im97mori.c2.fragment.setting.AlarmSettingFragment"
+        android:id="@+id/vibrationList"
+        android:name="jp.ne.wakwak.as.im97mori.c2.fragment.vibration.VibrationListFragment"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_margin="15dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_blue"
+        android:padding="15dp" />
 
     <FrameLayout
-        android:id="@+id/alarmSettingDetailLayout"
+        android:id="@+id/vibrationDetail"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="2" >
-    </FrameLayout>
+        android:layout_marginRight="15dp"
+        android:layout_weight="2" />
 
 </LinearLayout>

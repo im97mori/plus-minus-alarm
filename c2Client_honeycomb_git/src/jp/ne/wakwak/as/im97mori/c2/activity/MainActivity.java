@@ -26,7 +26,7 @@ import jp.ne.wakwak.as.im97mori.c2.db.AlarmDb;
 import jp.ne.wakwak.as.im97mori.c2.fragment.AlarmFragment;
 import jp.ne.wakwak.as.im97mori.c2.fragment.AlarmFragment.OnAlarmFragmentListener;
 import jp.ne.wakwak.as.im97mori.c2.fragment.AlarmNameFragment;
-import jp.ne.wakwak.as.im97mori.c2.fragment.AlarmNameFragment.OnAlarmAddFragmentListener;
+import jp.ne.wakwak.as.im97mori.c2.fragment.AlarmNameFragment.OnAlarmNameFragmentListener;
 import jp.ne.wakwak.as.im97mori.c2.fragment.AlarmTypeFragment;
 import jp.ne.wakwak.as.im97mori.c2.fragment.AlarmTypeFragment.OnAlarmTypeListener;
 import jp.ne.wakwak.as.im97mori.c2.fragment.OnRefreshListener;
@@ -51,7 +51,6 @@ import jp.ne.wakwak.as.im97mori.c2.util.Constants;
 import jp.ne.wakwak.as.im97mori.c2.vo.AlarmTypeVo;
 import jp.ne.wakwak.as.im97mori.c2.vo.AlarmVo;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentBreadCrumbs;
@@ -62,16 +61,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnAlarmFragmentListener,
-		OnAlarmAddFragmentListener, OnAlarmTypeListener,
-		OnAlarmRuleFragmentListener, OnGoogleAccountFragmentListener,
-		OnPreviewFragmentListener, OnTargetAlarmFragmentListner,
-		OnTargetDateFragmentListener, OnRuleListener,
-		OnBackStackChangedListener {
+public class MainActivity extends BaseActivity implements
+		OnAlarmFragmentListener, OnAlarmNameFragmentListener,
+		OnAlarmTypeListener, OnAlarmRuleFragmentListener,
+		OnGoogleAccountFragmentListener, OnPreviewFragmentListener,
+		OnTargetAlarmFragmentListner, OnTargetDateFragmentListener,
+		OnRuleListener, OnBackStackChangedListener {
 
 	private static final String TAG_ADD_ALARM_DIALOG = "addAlarmDialog";
 	private static final String TAG_ADD_RULE_DIALOG = "addRuleDialog";
@@ -144,22 +145,6 @@ public class MainActivity extends Activity implements OnAlarmFragmentListener,
 		this.receiver.setLinstener((OnRefreshListener) fragment);
 	}
 
-	private void showDialogFragment(DialogFragment fragment, String tag) {
-		FragmentManager fm = this.getFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
-		fragment.show(ft, tag);
-	}
-
-	private void dismissDialog(String tag) {
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
-		DialogFragment prev = (DialogFragment) getFragmentManager()
-				.findFragmentByTag(tag);
-		if (prev != null) {
-			prev.dismiss();
-		}
-		ft.commit();
-	}
-
 	@Override
 	public void onAddAlarm() {
 		AlarmNameFragment fragment = AlarmNameFragment.newInstance();
@@ -183,28 +168,26 @@ public class MainActivity extends Activity implements OnAlarmFragmentListener,
 
 	@Override
 	public void onAlarmNameOk(String name, String time, int enable) {
-		this.dismissDialog(TAG_ADD_ALARM_DIALOG);
+		if (TextUtils.isEmpty(name)) {
+			Toast.makeText(this, R.string.alarmNameNeedInputString,
+					Toast.LENGTH_SHORT).show();
+		} else {
+			FragmentManager fm = this.getFragmentManager();
+			Fragment fragment = fm.findFragmentById(R.id.listFragment);
 
-		FragmentManager fm = this.getFragmentManager();
-		Fragment fragment = fm.findFragmentById(R.id.listFragment);
-
-		if (fragment instanceof AlarmFragment) {
-			AlarmDb db = new AlarmDb(this);
-			long id = db.addAlarm(name, time, null, enable);
-			db.close();
-			this.startAlarmTypeFragment(id);
-		} else if (fragment instanceof AlarmTypeFragment) {
-			AlarmTypeFragment alarmTypeFragment = (AlarmTypeFragment) fragment;
-			alarmTypeFragment.alarmEditComplete(name, time, enable);
-			FragmentBreadCrumbs crumbs = (FragmentBreadCrumbs) this
-					.getActionBar().getCustomView();
-			crumbs.setTitle(name, null);
+			if (fragment instanceof AlarmFragment) {
+				AlarmDb db = new AlarmDb(this);
+				long id = db.addAlarm(name, time, null, enable);
+				db.close();
+				this.startAlarmTypeFragment(id);
+			} else if (fragment instanceof AlarmTypeFragment) {
+				AlarmTypeFragment alarmTypeFragment = (AlarmTypeFragment) fragment;
+				alarmTypeFragment.alarmEditComplete(name, time, enable);
+				FragmentBreadCrumbs crumbs = (FragmentBreadCrumbs) this
+						.getActionBar().getCustomView();
+				crumbs.setTitle(name, null);
+			}
 		}
-	}
-
-	@Override
-	public void onAlarmNameCancel() {
-		this.dismissDialog(TAG_ADD_ALARM_DIALOG);
 	}
 
 	@Override

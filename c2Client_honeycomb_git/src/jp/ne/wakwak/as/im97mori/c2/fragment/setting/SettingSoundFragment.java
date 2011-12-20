@@ -82,19 +82,14 @@ public class SettingSoundFragment extends Fragment implements
 				Constants.AlarmSetting.SOUND);
 		db.close();
 
-		if (vo == null) {
-			checkBox.setChecked(false);
-		} else {
-			checkBox.setChecked(true);
-		}
-		checkBox.setOnCheckedChangeListener(this);
-
 		TextView textView = (TextView) view
 				.findViewById(R.id.alarmSettingSoundSelect);
 		textView.setOnClickListener(this);
 		if (vo == null) {
+			checkBox.setChecked(false);
 			textView.setClickable(false);
 		} else {
+			checkBox.setChecked(true);
 			textView.setClickable(true);
 			String[] values = vo.getTypeValue().split("\n");
 			if (Integer.parseInt(values[0]) == Constants.SoundType.AUDIO) {
@@ -105,6 +100,8 @@ public class SettingSoundFragment extends Fragment implements
 						+ ":" + createRingtoneName(values[1]));
 			}
 		}
+		checkBox.setOnCheckedChangeListener(this);
+
 		return view;
 	}
 

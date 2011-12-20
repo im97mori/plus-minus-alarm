@@ -27,6 +27,7 @@ import java.util.TimeZone;
 
 import jp.ne.wakwak.as.im97mori.c2.vo.AlarmTypeVo;
 import android.content.Context;
+import android.os.Vibrator;
 
 import com.google.api.CalendarClient;
 import com.google.api.CalendarUrl;
@@ -181,13 +182,17 @@ public final class Util {
 		CalendarUrl url = new CalendarUrl(types[2]);
 		EventFeed eventFeed = null;
 		eventFeed = client.executeGetEventFeed(url);
+		long offset;
 		if (eventFeed != null) {
 			Iterator<EventEntry> eventIt = eventFeed.events.iterator();
 			while (eventIt.hasNext()) {
 				EventEntry entry = eventIt.next();
 
 				Calendar startWhenCalendar = GregorianCalendar.getInstance();
-				startWhenCalendar.setTimeInMillis(entry.when.startTime.value);
+				offset = TimeZone.getDefault().getOffset(
+						entry.when.startTime.value);
+				startWhenCalendar.setTimeInMillis(entry.when.startTime.value
+						- offset);
 				startWhenCalendar.set(Calendar.HOUR_OF_DAY, 0);
 				startWhenCalendar.set(Calendar.MINUTE, 0);
 				startWhenCalendar.set(Calendar.SECOND, 0);
@@ -196,7 +201,8 @@ public final class Util {
 					set.add(startWhenCalendar.getTime());
 				} else {
 					Calendar endWhenCalendar = GregorianCalendar.getInstance();
-					endWhenCalendar.setTimeInMillis(entry.when.endTime.value);
+					endWhenCalendar.setTimeInMillis(entry.when.endTime.value
+							- offset);
 					endWhenCalendar.set(Calendar.HOUR_OF_DAY, 0);
 					endWhenCalendar.set(Calendar.MINUTE, 0);
 					endWhenCalendar.set(Calendar.SECOND, 0);
@@ -229,5 +235,22 @@ public final class Util {
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		return calendar;
+	}
+
+	public static final void vibrate(Vibrator vibrator, long[] pattern) {
+		if (pattern != null && pattern.length > 0) {
+			int size = pattern.length - 1;
+			if (size == 1) {
+				vibrator.vibrate(10000L);
+			} else {
+				long[] fixedPattern = new long[size];
+				System.arraycopy(pattern, 1, fixedPattern, 0, size);
+
+				for (int i = 1; i < size; i++) {
+					fixedPattern[i] = pattern[i + 1] - pattern[i];
+				}
+				vibrator.vibrate(fixedPattern, -1);
+			}
+		}
 	}
 }
