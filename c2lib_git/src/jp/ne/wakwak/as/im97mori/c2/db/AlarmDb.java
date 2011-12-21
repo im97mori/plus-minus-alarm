@@ -496,24 +496,26 @@ public class AlarmDb extends SQLiteOpenHelper {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		String token = "";
-		try {
-			db = this.getReadableDatabase();
-			cursor = db.rawQuery(
-					"SELECT * FROM GOOGLE_ACCOUNT WHERE ACCOUNT = ?",
-					new String[] { account });
+		synchronized (LOCK) {
+			try {
+				db = this.getReadableDatabase();
+				cursor = db.rawQuery(
+						"SELECT * FROM GOOGLE_ACCOUNT WHERE ACCOUNT = ?",
+						new String[] { account });
 
-			if (cursor.getCount() > 0) {
-				cursor.moveToFirst();
+				if (cursor.getCount() > 0) {
+					cursor.moveToFirst();
 
-				token = cursor.getString(cursor
-						.getColumnIndex(GoogleAccountColumns.TOKEN));
-			}
-		} finally {
-			if (cursor != null && !cursor.isClosed()) {
-				cursor.close();
-			}
-			if (db != null && db.isOpen()) {
-				db.close();
+					token = cursor.getString(cursor
+							.getColumnIndex(GoogleAccountColumns.TOKEN));
+				}
+			} finally {
+				if (cursor != null && !cursor.isClosed()) {
+					cursor.close();
+				}
+				if (db != null && db.isOpen()) {
+					db.close();
+				}
 			}
 		}
 		return token;
@@ -522,81 +524,87 @@ public class AlarmDb extends SQLiteOpenHelper {
 	public void updateToken(String account, String token) {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
-		try {
-			db = this.getWritableDatabase();
-			db.beginTransaction();
+		synchronized (LOCK) {
+			try {
+				db = this.getWritableDatabase();
+				db.beginTransaction();
 
-			cursor = db.rawQuery(
-					"SELECT * FROM GOOGLE_ACCOUNT WHERE ACCOUNT = ?",
-					new String[] { account });
+				cursor = db.rawQuery(
+						"SELECT * FROM GOOGLE_ACCOUNT WHERE ACCOUNT = ?",
+						new String[] { account });
 
-			SQLiteStatement statement = null;
-			int index = 0;
-			if (cursor.getCount() > 0) {
-				cursor.close();
-				statement = db
-						.compileStatement("UPDATE GOOGLE_ACCOUNT SET TOKEN = ? WHERE ACCOUNT = ?");
-				statement.bindString(++index, token);
-				statement.bindString(++index, account);
-				statement.execute();
-			} else {
-				cursor.close();
-				statement = db
-						.compileStatement("INSERT INTO GOOGLE_ACCOUNT(TOKEN, ACCOUNT) VALUES(?,?)");
-				statement.bindString(++index, token);
-				statement.bindString(++index, account);
-				statement.executeInsert();
-			}
+				SQLiteStatement statement = null;
+				int index = 0;
+				if (cursor.getCount() > 0) {
+					cursor.close();
+					statement = db
+							.compileStatement("UPDATE GOOGLE_ACCOUNT SET TOKEN = ? WHERE ACCOUNT = ?");
+					statement.bindString(++index, token);
+					statement.bindString(++index, account);
+					statement.execute();
+				} else {
+					cursor.close();
+					statement = db
+							.compileStatement("INSERT INTO GOOGLE_ACCOUNT(TOKEN, ACCOUNT) VALUES(?,?)");
+					statement.bindString(++index, token);
+					statement.bindString(++index, account);
+					statement.executeInsert();
+				}
 
-			db.setTransactionSuccessful();
-		} finally {
-			db.endTransaction();
-			if (cursor != null && !cursor.isClosed()) {
-				cursor.close();
-			}
-			if (db != null && db.isOpen()) {
-				db.close();
+				db.setTransactionSuccessful();
+			} finally {
+				db.endTransaction();
+				if (cursor != null && !cursor.isClosed()) {
+					cursor.close();
+				}
+				if (db != null && db.isOpen()) {
+					db.close();
+				}
 			}
 		}
 	}
 
 	public void deleteToken(String account) {
 		SQLiteDatabase db = null;
-		try {
-			db = this.getWritableDatabase();
-			db.beginTransaction();
+		synchronized (LOCK) {
+			try {
+				db = this.getWritableDatabase();
+				db.beginTransaction();
 
-			SQLiteStatement statement = db
-					.compileStatement("DELETE FROM GOOGLE_ACCOUNT WHERE ACCOUNT = ?");
-			statement.bindString(1, account);
-			statement.execute();
+				SQLiteStatement statement = db
+						.compileStatement("DELETE FROM GOOGLE_ACCOUNT WHERE ACCOUNT = ?");
+				statement.bindString(1, account);
+				statement.execute();
 
-			db.setTransactionSuccessful();
-		} finally {
-			db.endTransaction();
-			if (db != null && db.isOpen()) {
-				db.close();
+				db.setTransactionSuccessful();
+			} finally {
+				db.endTransaction();
+				if (db != null && db.isOpen()) {
+					db.close();
+				}
 			}
 		}
 	}
 
 	public void setNeedCalculate(long id, int needCalculate) {
 		SQLiteDatabase db = null;
-		try {
-			db = this.getWritableDatabase();
-			db.beginTransaction();
+		synchronized (LOCK) {
+			try {
+				db = this.getWritableDatabase();
+				db.beginTransaction();
 
-			SQLiteStatement statement = db
-					.compileStatement("UPDATE ALARM SET NEED_CALCULATE = ? WHERE _id = ?");
-			statement.bindLong(1, needCalculate);
-			statement.bindLong(2, id);
-			statement.execute();
+				SQLiteStatement statement = db
+						.compileStatement("UPDATE ALARM SET NEED_CALCULATE = ? WHERE _id = ?");
+				statement.bindLong(1, needCalculate);
+				statement.bindLong(2, id);
+				statement.execute();
 
-			db.setTransactionSuccessful();
-		} finally {
-			db.endTransaction();
-			if (db != null && db.isOpen()) {
-				db.close();
+				db.setTransactionSuccessful();
+			} finally {
+				db.endTransaction();
+				if (db != null && db.isOpen()) {
+					db.close();
+				}
 			}
 		}
 	}
@@ -604,66 +612,21 @@ public class AlarmDb extends SQLiteOpenHelper {
 	public long addVibration(String name, long[] pattern) {
 		long id = -1;
 		SQLiteDatabase db = null;
-		try {
-			db = this.getWritableDatabase();
-			db.beginTransaction();
+		synchronized (LOCK) {
+			try {
+				db = this.getWritableDatabase();
+				db.beginTransaction();
 
-			SQLiteStatement statement = db
-					.compileStatement("INSERT INTO VIBRATION(NAME) VALUES(?)");
-			statement.bindString(1, name);
-			id = statement.executeInsert();
-			statement.close();
-
-			statement = db
-					.compileStatement("INSERT INTO VIBRATION_PATTERN(INDEX_NUMBER, DURATION, VIBRATION_ID) VALUES(?, ?, ?)");
-			int size = pattern.length;
-			int index = 0;
-			for (int i = 0; i < size; i++) {
-				statement.clearBindings();
-				index = 0;
-
-				statement.bindLong(++index, i + 1);
-				statement.bindLong(++index, pattern[i]);
-				statement.bindLong(++index, id);
-				statement.executeInsert();
-			}
-
-			db.setTransactionSuccessful();
-		} finally {
-			db.endTransaction();
-			if (db != null && db.isOpen()) {
-				db.close();
-			}
-		}
-		return id;
-	}
-
-	public void updateVibration(long id, String name, long[] pattern) {
-		SQLiteDatabase db = null;
-		Cursor cursor = null;
-		try {
-			db = this.getWritableDatabase();
-			db.beginTransaction();
-
-			cursor = db.rawQuery("SELECT _id FROM VIBRATION WHERE _id = ?",
-					new String[] { String.valueOf(id) });
-			if (cursor.getCount() == 1) {
-				int index = 0;
 				SQLiteStatement statement = db
-						.compileStatement("UPDATE VIBRATION SET NAME = ?  WHERE _id = ?");
-				statement.bindString(++index, name);
-				statement.bindLong(++index, id);
-				statement.execute();
+						.compileStatement("INSERT INTO VIBRATION(NAME) VALUES(?)");
+				statement.bindString(1, name);
+				id = statement.executeInsert();
 				statement.close();
-
-				statement = db
-						.compileStatement("DELETE FROM VIBRATION_PATTERN WHERE VIBRATION_ID = ?");
-				statement.bindLong(1, id);
-				statement.execute();
 
 				statement = db
 						.compileStatement("INSERT INTO VIBRATION_PATTERN(INDEX_NUMBER, DURATION, VIBRATION_ID) VALUES(?, ?, ?)");
 				int size = pattern.length;
+				int index = 0;
 				for (int i = 0; i < size; i++) {
 					statement.clearBindings();
 					index = 0;
@@ -673,16 +636,65 @@ public class AlarmDb extends SQLiteOpenHelper {
 					statement.bindLong(++index, id);
 					statement.executeInsert();
 				}
-			}
 
-			db.setTransactionSuccessful();
-		} finally {
-			db.endTransaction();
-			if (cursor != null && !cursor.isClosed()) {
-				cursor.close();
+				db.setTransactionSuccessful();
+			} finally {
+				db.endTransaction();
+				if (db != null && db.isOpen()) {
+					db.close();
+				}
 			}
-			if (db != null && db.isOpen()) {
-				db.close();
+		}
+		return id;
+	}
+
+	public void updateVibration(long id, String name, long[] pattern) {
+		SQLiteDatabase db = null;
+		Cursor cursor = null;
+		synchronized (LOCK) {
+			try {
+				db = this.getWritableDatabase();
+				db.beginTransaction();
+
+				cursor = db.rawQuery("SELECT _id FROM VIBRATION WHERE _id = ?",
+						new String[] { String.valueOf(id) });
+				if (cursor.getCount() == 1) {
+					int index = 0;
+					SQLiteStatement statement = db
+							.compileStatement("UPDATE VIBRATION SET NAME = ?  WHERE _id = ?");
+					statement.bindString(++index, name);
+					statement.bindLong(++index, id);
+					statement.execute();
+					statement.close();
+
+					statement = db
+							.compileStatement("DELETE FROM VIBRATION_PATTERN WHERE VIBRATION_ID = ?");
+					statement.bindLong(1, id);
+					statement.execute();
+
+					statement = db
+							.compileStatement("INSERT INTO VIBRATION_PATTERN(INDEX_NUMBER, DURATION, VIBRATION_ID) VALUES(?, ?, ?)");
+					int size = pattern.length;
+					for (int i = 0; i < size; i++) {
+						statement.clearBindings();
+						index = 0;
+
+						statement.bindLong(++index, i + 1);
+						statement.bindLong(++index, pattern[i]);
+						statement.bindLong(++index, id);
+						statement.executeInsert();
+					}
+				}
+
+				db.setTransactionSuccessful();
+			} finally {
+				db.endTransaction();
+				if (cursor != null && !cursor.isClosed()) {
+					cursor.close();
+				}
+				if (db != null && db.isOpen()) {
+					db.close();
+				}
 			}
 		}
 	}
@@ -691,39 +703,41 @@ public class AlarmDb extends SQLiteOpenHelper {
 		VibrationVo vo = null;
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
-		try {
-			db = this.getReadableDatabase();
-			cursor = db.rawQuery("SELECT * FROM VIBRATION WHERE _id = ?",
-					new String[] { String.valueOf(id) });
-			if (cursor.getCount() == 1) {
-				vo = new VibrationVo();
-				cursor.moveToFirst();
-				vo.setName(cursor.getString(cursor
-						.getColumnIndex(VibrationColumns.NAME)));
-				cursor.close();
+		synchronized (LOCK) {
+			try {
+				db = this.getReadableDatabase();
+				cursor = db.rawQuery("SELECT * FROM VIBRATION WHERE _id = ?",
+						new String[] { String.valueOf(id) });
+				if (cursor.getCount() == 1) {
+					vo = new VibrationVo();
+					cursor.moveToFirst();
+					vo.setName(cursor.getString(cursor
+							.getColumnIndex(VibrationColumns.NAME)));
+					cursor.close();
 
-				cursor = db
-						.rawQuery(
-								"SELECT DURATION FROM VIBRATION_PATTERN WHERE VIBRATION_ID = ? ORDER BY INDEX_NUMBER",
-								new String[] { String.valueOf(id) });
-				cursor.moveToFirst();
-				int index = 0;
-				long[] pattern = new long[cursor.getCount()];
-				while (!cursor.isAfterLast()) {
-					pattern[index] = cursor.getLong(cursor
-							.getColumnIndex(VibrationColumns.DURATION));
+					cursor = db
+							.rawQuery(
+									"SELECT DURATION FROM VIBRATION_PATTERN WHERE VIBRATION_ID = ? ORDER BY INDEX_NUMBER",
+									new String[] { String.valueOf(id) });
+					cursor.moveToFirst();
+					int index = 0;
+					long[] pattern = new long[cursor.getCount()];
+					while (!cursor.isAfterLast()) {
+						pattern[index] = cursor.getLong(cursor
+								.getColumnIndex(VibrationColumns.DURATION));
 
-					cursor.moveToNext();
-					index++;
+						cursor.moveToNext();
+						index++;
+					}
+					vo.setPattern(pattern);
 				}
-				vo.setPattern(pattern);
-			}
-		} finally {
-			if (cursor != null && !cursor.isClosed()) {
-				cursor.close();
-			}
-			if (db != null && db.isOpen()) {
-				db.close();
+			} finally {
+				if (cursor != null && !cursor.isClosed()) {
+					cursor.close();
+				}
+				if (db != null && db.isOpen()) {
+					db.close();
+				}
 			}
 		}
 		return vo;
@@ -733,48 +747,51 @@ public class AlarmDb extends SQLiteOpenHelper {
 		List<VibrationVo> list = null;
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
-		try {
-			db = this.getReadableDatabase();
-			cursor = db.rawQuery("SELECT * FROM VIBRATION ORDER BY _id", null);
-			list = new ArrayList<VibrationVo>(cursor.getCount());
-			cursor.moveToFirst();
-			while (!cursor.isAfterLast()) {
-				VibrationVo vo = new VibrationVo();
-				vo.setId(cursor.getLong(cursor
-						.getColumnIndex(VibrationColumns._ID)));
-				vo.setName(cursor.getString(cursor
-						.getColumnIndex(VibrationColumns.NAME)));
-				list.add(vo);
-				cursor.moveToNext();
-			}
-			cursor.close();
-
-			Iterator<VibrationVo> it = list.iterator();
-			while (it.hasNext()) {
-				VibrationVo vo = it.next();
-				cursor = db
-						.rawQuery(
-								"SELECT DURATION FROM VIBRATION_PATTERN WHERE VIBRATION_ID = ? ORDER BY INDEX_NUMBER",
-								new String[] { String.valueOf(vo.getId()) });
+		synchronized (LOCK) {
+			try {
+				db = this.getReadableDatabase();
+				cursor = db.rawQuery("SELECT * FROM VIBRATION ORDER BY _id",
+						null);
+				list = new ArrayList<VibrationVo>(cursor.getCount());
 				cursor.moveToFirst();
-				int index = 0;
-				long[] pattern = new long[cursor.getCount()];
 				while (!cursor.isAfterLast()) {
-					pattern[index] = cursor.getLong(cursor
-							.getColumnIndex(VibrationColumns.DURATION));
-
+					VibrationVo vo = new VibrationVo();
+					vo.setId(cursor.getLong(cursor
+							.getColumnIndex(VibrationColumns._ID)));
+					vo.setName(cursor.getString(cursor
+							.getColumnIndex(VibrationColumns.NAME)));
+					list.add(vo);
 					cursor.moveToNext();
-					index++;
 				}
-				vo.setPattern(pattern);
 				cursor.close();
-			}
-		} finally {
-			if (cursor != null && !cursor.isClosed()) {
-				cursor.close();
-			}
-			if (db != null && db.isOpen()) {
-				db.close();
+
+				Iterator<VibrationVo> it = list.iterator();
+				while (it.hasNext()) {
+					VibrationVo vo = it.next();
+					cursor = db
+							.rawQuery(
+									"SELECT DURATION FROM VIBRATION_PATTERN WHERE VIBRATION_ID = ? ORDER BY INDEX_NUMBER",
+									new String[] { String.valueOf(vo.getId()) });
+					cursor.moveToFirst();
+					int index = 0;
+					long[] pattern = new long[cursor.getCount()];
+					while (!cursor.isAfterLast()) {
+						pattern[index] = cursor.getLong(cursor
+								.getColumnIndex(VibrationColumns.DURATION));
+
+						cursor.moveToNext();
+						index++;
+					}
+					vo.setPattern(pattern);
+					cursor.close();
+				}
+			} finally {
+				if (cursor != null && !cursor.isClosed()) {
+					cursor.close();
+				}
+				if (db != null && db.isOpen()) {
+					db.close();
+				}
 			}
 		}
 
