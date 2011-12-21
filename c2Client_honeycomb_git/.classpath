@@ -11,7 +11,6 @@
 	<classpathentry kind="lib" path="libs/guava-r09.jar" sourcepath="/mnt/data/develop/google/google-api/dependencies/guava-r09-sources.jar"/>
 	<classpathentry kind="lib" path="libs/httpclient-4.0.3.jar" sourcepath="/mnt/data/develop/google/google-api/dependencies/httpclient-4.0.3-sources.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="libs/android-support-v4.jar" sourcepath="/mnt/data/develop/android/source/4.0_java/4.0/sources.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 	<referencedentry kind="lib" path="libs/guava-r09.jar" sourcepath="/mnt/data/develop/google/google-api/dependencies/guava-r09-sources.jar"/>
 	<referencedentry kind="lib" path="libs/google-api-client-1.4.1-beta.jar" sourcepath="/mnt/data/develop/google/google-api/google-api-client-1.4.1-beta-sources.jar"/>
