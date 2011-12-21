@@ -113,8 +113,8 @@ public class SettingSoundFragment extends Fragment implements
 		textView.setText(this.getString(R.string.noSelect));
 		textView.setClickable(paramBoolean);
 		if (!paramBoolean) {
-			AlarmDb db = new AlarmDb(this.getActivity());
 			Bundle bundle = this.getArguments();
+			AlarmDb db = new AlarmDb(this.getActivity());
 			db.deleteAlarmSetting(bundle.getLong(Constants.ArgumentKey.ID),
 					Constants.AlarmSetting.SOUND);
 			db.close();
@@ -129,8 +129,8 @@ public class SettingSoundFragment extends Fragment implements
 	}
 
 	public void onSoundSelected(int type, String typeValue) {
-		AlarmDb db = new AlarmDb(this.getActivity());
 		Bundle bundle = this.getArguments();
+		AlarmDb db = new AlarmDb(this.getActivity());
 		db.setAlarmSetting(bundle.getLong(Constants.ArgumentKey.ID),
 				Constants.AlarmSetting.SOUND, type + "\n" + typeValue);
 		db.close();

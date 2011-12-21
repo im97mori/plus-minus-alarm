@@ -121,11 +121,10 @@ public class MainActivity extends BaseActivity implements
 			long id = bundle.getLong(Constants.ArgumentKey.ID);
 			AlarmDb db = new AlarmDb(this);
 			AlarmVo vo = db.getAlarm(id);
-			crumbs.setTitle(vo.getName(), null);
 			db.close();
+			crumbs.setTitle(vo.getName(), null);
 			this.receiver.setLinstener((OnRefreshListener) fragment);
 		}
-
 	}
 
 	private void changeListFragment(Fragment fragment) {
@@ -431,8 +430,8 @@ public class MainActivity extends BaseActivity implements
 			long id = bundle.getLong(Constants.ArgumentKey.ID);
 			AlarmDb db = new AlarmDb(this);
 			AlarmVo vo = db.getAlarm(id);
-			crumbs.setTitle(vo.getName(), null);
 			db.close();
+			crumbs.setTitle(vo.getName(), null);
 		}
 
 		OnRefreshListener listener = (OnRefreshListener) fragment;

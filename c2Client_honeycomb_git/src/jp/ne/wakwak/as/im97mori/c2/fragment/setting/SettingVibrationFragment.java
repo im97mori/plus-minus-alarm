@@ -89,8 +89,8 @@ public class SettingVibrationFragment extends Fragment implements
 		textView.setText(this.getString(R.string.noSelect));
 		textView.setClickable(paramBoolean);
 		if (!paramBoolean) {
-			AlarmDb db = new AlarmDb(this.getActivity());
 			Bundle bundle = this.getArguments();
+			AlarmDb db = new AlarmDb(this.getActivity());
 			db.deleteAlarmSetting(bundle.getLong(Constants.ArgumentKey.ID),
 					Constants.AlarmSetting.VIBRATION);
 			db.close();
@@ -147,8 +147,8 @@ public class SettingVibrationFragment extends Fragment implements
 	}
 
 	public void onVibrationPatternSelected(long id, String name) {
-		AlarmDb db = new AlarmDb(this.getActivity());
 		Bundle bundle = this.getArguments();
+		AlarmDb db = new AlarmDb(this.getActivity());
 		db.setAlarmSetting(bundle.getLong(Constants.ArgumentKey.ID),
 				Constants.AlarmSetting.VIBRATION, String.valueOf(id));
 		db.close();

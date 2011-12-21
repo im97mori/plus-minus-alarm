@@ -106,8 +106,8 @@ public class SettingScreenFragment extends Fragment implements
 			disable = paramCompoundButton.isChecked();
 		}
 
-		AlarmDb db = new AlarmDb(this.getActivity());
 		Bundle bundle = this.getArguments();
+		AlarmDb db = new AlarmDb(this.getActivity());
 		db.setAlarmSetting(bundle.getLong(Constants.ArgumentKey.ID),
 				Constants.AlarmSetting.SCREEN, Boolean.toString(disable) + "\n"
 						+ Boolean.toString(reenable));

@@ -87,6 +87,7 @@ public class SettingVibrationPatternFragment extends DialogFragment implements
 
 		AlarmDb db = new AlarmDb(this.getActivity());
 		List<VibrationVo> list = db.getVibrationList();
+		db.close();
 		listView.setAdapter(new PatternAdapter(list));
 
 		Bundle bundle = this.getArguments();

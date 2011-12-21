@@ -123,6 +123,7 @@ public class RuleCalendarFragment extends DialogFragment implements
 				.getString(Constants.ArgumentKey.ACCOUNT));
 		AlarmDb db = new AlarmDb(activity);
 		this.authToken = db.getToken(account.name);
+		db.close();
 		if (TextUtils.isEmpty(this.authToken)) {
 			HandlerThread thread = new HandlerThread(this.getClass().getName());
 			thread.start();
@@ -229,6 +230,7 @@ public class RuleCalendarFragment extends DialogFragment implements
 					db.updateToken(
 							argment.getString(Constants.ArgumentKey.ACCOUNT),
 							authToken);
+					db.close();
 					HandlerThread thread = new HandlerThread(this.getClass()
 							.getName());
 					thread.start();

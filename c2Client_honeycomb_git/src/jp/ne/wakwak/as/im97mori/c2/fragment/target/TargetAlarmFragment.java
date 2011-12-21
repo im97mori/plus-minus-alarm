@@ -83,7 +83,6 @@ public class TargetAlarmFragment extends DialogFragment implements
 		AlarmDb db = new AlarmDb(this.getActivity());
 		for (int i = 0; i < ids.length; i++) {
 			list.add(db.getAlarm(ids[i]));
-
 		}
 		db.close();
 

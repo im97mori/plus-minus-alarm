@@ -125,10 +125,10 @@ public class WidgetAdapterService extends RemoteViewsService {
 		}
 
 		private void updateList() {
-			WidgetDb db = new WidgetDb(this.context);
 			int widgetId = this.intent.getIntExtra(
 					AppWidgetManager.EXTRA_APPWIDGET_ID,
 					AppWidgetManager.INVALID_APPWIDGET_ID);
+			WidgetDb db = new WidgetDb(this.context);
 			this.list = db.getAlarmList(widgetId);
 			db.close();
 		}
