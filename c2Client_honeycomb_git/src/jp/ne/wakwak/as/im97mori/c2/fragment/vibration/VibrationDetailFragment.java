@@ -112,6 +112,8 @@ public class VibrationDetailFragment extends Fragment implements Callback,
 
 	public static interface OnVibrationDetailFragmentListener {
 		void onEditName(String name);
+
+		void onUpdateVibration();
 	}
 
 	private OnVibrationDetailFragmentListener listener;
@@ -465,6 +467,8 @@ public class VibrationDetailFragment extends Fragment implements Callback,
 					bundle.putLong(Constants.ArgumentKey.ID, id);
 				}
 				db.close();
+
+				this.listener.onUpdateVibration();
 			}
 			result = true;
 		} else {
@@ -525,5 +529,16 @@ public class VibrationDetailFragment extends Fragment implements Callback,
 
 		Bundle bundle = this.getArguments();
 		bundle.putString(Constants.ArgumentKey.NAME, name);
+
+		if (bundle.containsKey(Constants.ArgumentKey.ID)) {
+			AlarmDb db = new AlarmDb(this.getActivity());
+			VibrationVo vo = db.getVibration(bundle
+					.getLong(Constants.ArgumentKey.ID));
+			vo.setName(name);
+			db.updateVibration(vo.getId(), name, vo.getPattern());
+			db.close();
+		}
+
+		this.listener.onUpdateVibration();
 	}
 }

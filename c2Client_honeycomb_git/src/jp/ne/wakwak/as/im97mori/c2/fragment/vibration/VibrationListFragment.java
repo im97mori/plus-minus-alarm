@@ -193,6 +193,7 @@ public class VibrationListFragment extends ListFragment {
 		Intent intent = item.getIntent();
 		long id = intent.getLongExtra(Constants.IntentKey.ID,
 				Constants.TEMPOLARY_ID);
+
 		AlarmDb db = new AlarmDb(this.getActivity());
 		db.deleteVibration(id);
 		List<VibrationVo> list = db.getVibrationList();
@@ -216,6 +217,28 @@ public class VibrationListFragment extends ListFragment {
 		}
 
 		return true;
+	}
+
+	public void onVibrationUpdate() {
+		ListView listView = this.getListView();
+		int index = listView.getCheckedItemPosition();
+		VibrationVo vo = (VibrationVo) listView.getItemAtPosition(index);
+
+		AlarmDb db = new AlarmDb(this.getActivity());
+		List<VibrationVo> list = db.getVibrationList();
+		db.close();
+
+		VibrationAdapter adapter = new VibrationAdapter(list);
+		this.setListAdapter(adapter);
+
+		index = 0;
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getId() == vo.getId()) {
+				index = i;
+				break;
+			}
+		}
+		listView.setItemChecked(index, true);
 	}
 
 	@Override

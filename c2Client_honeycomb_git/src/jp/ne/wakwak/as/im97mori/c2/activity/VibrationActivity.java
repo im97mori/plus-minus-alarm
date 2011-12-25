@@ -110,4 +110,12 @@ public class VibrationActivity extends Activity implements
 		}
 		return result;
 	}
+
+	@Override
+	public void onUpdateVibration() {
+		FragmentManager fm = this.getFragmentManager();
+		VibrationListFragment fragment = (VibrationListFragment) fm
+				.findFragmentById(R.id.vibrationList);
+		fragment.onVibrationUpdate();
+	}
 }

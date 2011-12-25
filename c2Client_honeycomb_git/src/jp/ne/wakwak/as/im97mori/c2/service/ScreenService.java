@@ -27,6 +27,8 @@ import android.content.IntentFilter;
 
 public class ScreenService extends IntentService {
 
+	private static final Object[] LOCK = new Object[0];
+
 	private static boolean reenableKeyguard;
 	private static KeyguardLock keyguardLock;
 	private static ScreenOffReceiver receiver;
@@ -60,29 +62,33 @@ public class ScreenService extends IntentService {
 				reenableKeyguard = Boolean.valueOf(values[1]);
 			}
 
-			if (disableKeyguard) {
-				KeyguardManager km = (KeyguardManager) this
-						.getSystemService(Context.KEYGUARD_SERVICE);
-				if (km.inKeyguardRestrictedInputMode()) {
-					keyguardLock = km
-							.newKeyguardLock(this.getClass().getName());
-					keyguardLock.disableKeyguard();
+			synchronized (LOCK) {
+				if (disableKeyguard && keyguardLock == null) {
+					KeyguardManager km = (KeyguardManager) this
+							.getSystemService(Context.KEYGUARD_SERVICE);
+					if (km.inKeyguardRestrictedInputMode()) {
+						keyguardLock = km.newKeyguardLock(this.getClass()
+								.getName());
+						keyguardLock.disableKeyguard();
 
-					IntentFilter filter = new IntentFilter(
-							Intent.ACTION_SCREEN_OFF);
-					if (receiver == null) {
-						ScreenOffReceiver innerReceiver = new ScreenOffReceiver();
-						this.getApplicationContext().registerReceiver(
-								innerReceiver, filter);
-						receiver = innerReceiver;
+						if (receiver == null) {
+							ScreenOffReceiver innerReceiver = new ScreenOffReceiver();
+							IntentFilter filter = new IntentFilter(
+									Intent.ACTION_SCREEN_OFF);
+							this.getApplicationContext().registerReceiver(
+									innerReceiver, filter);
+							receiver = innerReceiver;
+						}
 					}
 				}
 			}
 		} else if (intent.getAction().equals(Constants.Action.STOP)) {
-			if (reenableKeyguard && keyguardLock != null) {
-				keyguardLock.reenableKeyguard();
-				keyguardLock = null;
-				if (receiver != null) {
+			synchronized (LOCK) {
+				if (reenableKeyguard && keyguardLock != null) {
+					keyguardLock.reenableKeyguard();
+					keyguardLock = null;
+				}
+				if (keyguardLock == null && receiver != null) {
 					this.getApplicationContext().unregisterReceiver(receiver);
 					receiver = null;
 				}
@@ -94,9 +100,11 @@ public class ScreenService extends IntentService {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if (keyguardLock != null) {
-				keyguardLock.reenableKeyguard();
-				keyguardLock = null;
+			synchronized (LOCK) {
+				if (keyguardLock != null) {
+					keyguardLock.reenableKeyguard();
+					keyguardLock = null;
+				}
 				if (ScreenService.receiver != null) {
 					ScreenService.this.getApplicationContext()
 							.unregisterReceiver(ScreenService.receiver);

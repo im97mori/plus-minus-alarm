@@ -54,10 +54,8 @@ public class WidgetDb extends SQLiteOpenHelper {
 		synchronized (LOCK) {
 			try {
 				db = this.getReadableDatabase();
-				cursor = db
-						.rawQuery(
-								"SELECT DISTINCT ALARM_ID FROM WIDGET",
-								null);
+				cursor = db.rawQuery("SELECT DISTINCT ALARM_ID FROM WIDGET",
+						null);
 				if (cursor.getCount() > 0) {
 					cursor.moveToFirst();
 					while (!cursor.isAfterLast()) {

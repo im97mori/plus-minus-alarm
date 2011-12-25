@@ -118,12 +118,12 @@ public class AlarmService extends IntentService {
 		AlarmVo alarmVo = db.getAlarm(id);
 		db.close();
 		if (alarmVo != null) {
-			this.toNext(alarmVo);
+			this.inCalculate(alarmVo);
 		}
 		this.updateAlarmSetting(id, alarmVo);
 	}
 
-	private void toNext(AlarmVo alarmVo) {
+	private void inCalculate(AlarmVo alarmVo) {
 		if (alarmVo.getEnable() == Constants.AlarmEnable.ALARM_ENABLED) {
 			Calendar calendar = GregorianCalendar.getInstance();
 			calendar.set(Calendar.SECOND, 0);
@@ -211,7 +211,7 @@ public class AlarmService extends IntentService {
 		} else {
 			long next = vo.getNext();
 			long diff = next - System.currentTimeMillis();
-			if (diff < 120000) {
+			if (diff < 120000L) {
 				PendingIntent pendingIntent = PendingIntent.getBroadcast(
 						this.getApplicationContext(), 0, intent,
 						PendingIntent.FLAG_NO_CREATE);
@@ -225,7 +225,6 @@ public class AlarmService extends IntentService {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					diff = next - System.currentTimeMillis();
 				}
 				this.sendBroadcast(intent);
 			} else {
@@ -264,7 +263,7 @@ public class AlarmService extends IntentService {
 
 		AlarmVo alarmVo = db.getAlarm(id);
 		db.close();
-		this.toNext(alarmVo);
+		this.inCalculate(alarmVo);
 		db = new AlarmDb(this);
 		alarmVo = db.getAlarm(id);
 		db.close();
@@ -285,7 +284,7 @@ public class AlarmService extends IntentService {
 		AlarmDb db = new AlarmDb(this);
 		AlarmVo alarmVo = db.getAlarm(id);
 		db.close();
-		this.toNext(alarmVo);
+		this.inCalculate(alarmVo);
 		db = new AlarmDb(this);
 		alarmVo = db.getAlarm(id);
 		db.close();
