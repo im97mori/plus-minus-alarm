@@ -37,7 +37,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
 public class AlarmDb extends SQLiteOpenHelper {
-	private static final Object LOCK = new Object();
+
+	private static final Object[] LOCK = new Object[0];
+
 	private Context context;
 
 	public AlarmDb(Context context) {
@@ -794,7 +796,6 @@ public class AlarmDb extends SQLiteOpenHelper {
 				}
 			}
 		}
-
 		return list;
 	}
 
